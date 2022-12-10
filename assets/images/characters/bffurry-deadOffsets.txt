@@ -1,4 +1,4 @@
 firstDeath 0 0
-deathLoop -132 -107
-deathConfirm -130 -107
+deathLoop -132 -97
+deathConfirm -130 -97
 idle 0 0
