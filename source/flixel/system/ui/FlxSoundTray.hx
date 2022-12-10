@@ -1,10 +1,10 @@
 package flixel.system.ui;
 
 #if FLX_SOUND_SYSTEM
+import flash.Lib;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
-import flash.Lib;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
@@ -76,9 +76,9 @@ class FlxSoundTray extends Sprite
 		text.gridFitType = GridFitType.PIXEL;
 		#else
 		#end
-		var dtf:TextFormat = new TextFormat(/*FlxAssets.FONT_DEFAULT*/ Paths.font("vcr.ttf"), 10, 0xffffff);
+		var dtf:TextFormat = new TextFormat(/*FlxAssets.FONT_DEFAULT*/ Paths.font("vcr.ttf"), 10, FlxColor.WHITE);
 		dtf.align = TextFormatAlign.CENTER;
-		dtf.font = Paths.font("vcr.ttf");
+		dtf.font = "Needlemouse Serif";
 		text.defaultTextFormat = dtf;
 		addChild(text);
 		text.y = 16;
@@ -89,7 +89,7 @@ class FlxSoundTray extends Sprite
 
 		for (i in 0...10)
 		{
-			tmp = new Bitmap(new BitmapData(4, i + 1, false, FlxColor.RED));
+			tmp = new Bitmap(new BitmapData(4, i + 1, false, 0xFF973838));
 			tmp.x = bx;
 			tmp.y = by;
 			addChild(tmp);
@@ -109,11 +109,12 @@ class FlxSoundTray extends Sprite
 	{
 		// Animate stupid sound tray thing
 
-		if (FlxG.keys.anyJustPressed([NUMPADZERO, ZERO])){
-			muted = !muted;
-		}
+		// if (FlxG.keys.anyJustPressed([NUMPADZERO, ZERO])){
+		// 	muted = !muted;
+		// }
 
-		text.text = (muted ?  "MUTED" : "VOLUME");
+		// text.text = (muted ?  "MUTED" : "VOLUME");
+		text.text = (FlxG.sound.muted ? "MUTED" : "VOLUME");
 
 		if (_timer > 0)
 		{

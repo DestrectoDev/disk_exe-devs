@@ -65,6 +65,10 @@ class GameOverSubstate extends MusicBeatSubState
 		add(dadOpponent);
 		add(bf);
 
+		if (PlayState.curStage == "green_hill")
+			add(stageDir.redShade);
+
+
 		PlayState.boyfriend.destroy();
 
 		stageDir.repositionPlayers(PlayState.curStage, bf, dadOpponent, gf);
@@ -115,6 +119,9 @@ class GameOverSubstate extends MusicBeatSubState
 	override function beatHit()
 	{
 		super.beatHit();
+
+		if (bf != null)
+			bf.playAnim("deathLoop");
 
 		if (curBeat % 2 == 0) {
 			dadOpponent.dance();

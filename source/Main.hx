@@ -55,7 +55,7 @@ class Main extends Sprite
 	**/
 	public static var gameWeeks:Array<Dynamic> = [
 		[
-			['Hill', 'Melancholyc-tentation', "Confronting-Gods"],
+			['Hill', 'Melancholyc-tentation'/*, "Confronting-Gods"*/],
 			['sonic_exe'],
 			[FlxColor.fromRGB(37, 45, 187)],
 			'SONIC EXE'
