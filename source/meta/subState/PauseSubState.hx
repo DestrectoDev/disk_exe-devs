@@ -3,6 +3,7 @@ package meta.subState;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
@@ -21,9 +22,9 @@ import sys.thread.Thread;
 
 class PauseSubState extends MusicBeatSubState
 {
-	var grpMenuShit:FlxTypedGroup<Alphabet>;
+	var grpMenuShit:FlxTypedGroup<FNFSprite>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['resumen', 'restart', 'exit'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -48,6 +49,14 @@ class PauseSubState extends MusicBeatSubState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0;
 		bg.scrollFactor.set();
+
+		var backGround = new FlxBackdrop(Paths.image("menus/base/back_menu"), 0, 0, true, true, 0, 0);
+		// backGround.ID = i;
+		backGround.velocity.x = -190;
+		backGround.screenCenter(Y);
+		backGround.antialiasing = true;
+		backGround.alpha = 0;
+		add(backGround);
 		add(bg);
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
@@ -79,33 +88,45 @@ class PauseSubState extends MusicBeatSubState
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
 		levelDeaths.x = FlxG.width - (levelDeaths.width + 20);
 
-		pene = new FNFSprite(860, 350);
+		pene = new FNFSprite(860, 90);
 		pene.frames = Paths.getSparrowAtlas("menus/base/pause_bf");
 		pene.animation.addByPrefix("idle", "BF DE PAUSA", 24);
 		pene.antialiasing = true;
 		pene.playAnim("idle");
+		pene.screenCenter(X);
 		add(pene);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
+		FlxTween.tween(backGround, {alpha: 0.4}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(levelDeaths, {alpha: 1, y: levelDeaths.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
 
-		grpMenuShit = new FlxTypedGroup<Alphabet>();
+		grpMenuShit = new FlxTypedGroup<FNFSprite>();
 		add(grpMenuShit);
 
 		for (i in 0...menuItems.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
-			songText.isMenuItem = true;
-			songText.targetY = i;
-			grpMenuShit.add(songText);
+			var item:FNFSprite = new FNFSprite(0, 0);
+			// songText.isMenuItem = true;
+			item.loadGraphic(Paths.image("pause/"+menuItems[i]));
+			// songText.targetY = i;
+			item.x = 120 + (i * 250);
+			item.y = 334;
+			grpMenuShit.add(item);
 		}
+
+		box = new FNFSprite(grpMenuShit.members[0].x, 0);
+		box.loadGraphic(Paths.image("pause/red"));
+		box.y = grpMenuShit.members[0].y - (box.height / 2);
+		box.antialiasign = false;
+		add(box);
 
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
+	var box:FNFSprite;
     
 	var pene:FNFSprite;
 	
@@ -121,8 +142,8 @@ class PauseSubState extends MusicBeatSubState
 	{
 		super.update(elapsed);
 
-		var upP = controls.UI_UP_P;
-		var downP = controls.UI_DOWN_P;
+		var upP = controls.UI_LEFT_P;
+		var downP = controls.UI_RIGHT_P;
 		var accepted = controls.ACCEPT;
 
 		if (upP)
@@ -178,22 +199,17 @@ class PauseSubState extends MusicBeatSubState
 			curSelected = menuItems.length - 1;
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
-
+		
 		var bullShit:Int = 0;
 
 		for (item in grpMenuShit.members)
 		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
-
-			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
-
-			if (item.targetY == 0)
-			{
-				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
-			}
+			if (curSelected == 2)
+				box.x = item.x * ((curSelected + 1) * 9.75);
+			else if (curAlt == 1)
+				box.x = item.x * ((curSelected + 1) * 7.45);
+			else if (curAlt == 0)
+				box.x = item.x * ((curSelected + 1) * 0.51);
 		}
 		//
 	}

@@ -1,10 +1,10 @@
 package flixel.system.ui;
 
 #if FLX_SOUND_SYSTEM
+import flash.Lib;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
-import flash.Lib;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
@@ -89,7 +89,7 @@ class FlxSoundTray extends Sprite
 
 		for (i in 0...10)
 		{
-			tmp = new Bitmap(new BitmapData(4, i + 1, false, FlxColor.RED));
+			tmp = new Bitmap(new BitmapData(4, i + 1, false, 0xFFb31212));
 			tmp.x = bx;
 			tmp.y = by;
 			addChild(tmp);
@@ -113,7 +113,7 @@ class FlxSoundTray extends Sprite
 			muted = !muted;
 		}
 
-		text.text = (muted ?  "MUTED" : "VOLUME");
+		text.text = (FlxG.sound.muted ?  "MUTED" : "VOLUME");
 
 		if (_timer > 0)
 		{

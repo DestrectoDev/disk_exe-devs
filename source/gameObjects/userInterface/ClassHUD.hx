@@ -23,7 +23,7 @@ import meta.state.PlayState;
 
 using StringTools;
 
-class ClassHUD extends FlxTypedGroup<FlxBasic>
+class ClassHUD extends FlxSpriteGroup
 {
 	// set up variables and stuff here
 	var scoreBar:FlxText;
@@ -38,8 +38,8 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 	public var autoplayMark:FlxText; // autoplay indicator at the center
 	public var autoplaySine:Float = 0;
 
-	private var healthBarBG:FlxSprite;
-	private var healthBar:FlxBar;
+	public var healthBarBG:FlxSprite;
+	public var healthBar:FlxBar;
 
 	private var SONG = PlayState.SONG;
 
@@ -72,7 +72,6 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 			barY).loadGraphic(Paths.image(ForeverTools.returnSkinAsset('healthBar', PlayState.assetModifier, PlayState.changeableSkin, 'UI')));
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
-		healthBarBG.alpha = 0.6;
 		add(healthBarBG);
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8));
@@ -80,7 +79,6 @@ class ClassHUD extends FlxTypedGroup<FlxBasic>
 		var dadColor = PlayState.dadOpponent.iconColor;
 		var bfColor = PlayState.boyfriend.iconColor;
 		healthBar.createFilledBar(dadColor, bfColor);
-		healthBar.alpha = 0.6;
 		// healthBar
 		add(healthBar);
 

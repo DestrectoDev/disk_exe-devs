@@ -1,0 +1,8 @@
+charge -28 0
+idle 0 0
+spindash -15 -13
+crouched -1 0
+walk -6 0
+dash -45 -3
+lookinup 0 0
+running -44 0

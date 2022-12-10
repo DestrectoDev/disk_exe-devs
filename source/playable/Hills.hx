@@ -1,28 +1,22 @@
 package playable;
 
 import flixel.*;
+import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.*;
 import meta.MusicBeat.MusicBeatState;
+import meta.data.dependency.*;
 import meta.state.*;
 import playable.*;
 
 class Hills extends MusicBeatState
-
 {
-	var tree:FlxSprite;
-	var palm:FlxSprite;
-	var sky:FlxSprite;
-	var mountain:FlxSprite;
-	var floor:FlxSprite;
-	var moai:FlxSprite;
-
 	var scoreHUD:FlxSprite;
 
-	public static var daPixelZoom:Float = 3.2;
+	public static var daPixelZoom:Float = 6;
 
 	var camHUD:FlxCamera;
 
@@ -43,6 +37,9 @@ class Hills extends MusicBeatState
 	var lifeTxt:FlxText;
 
 	// end
+	var bg:FNFSprite;
+	var floor:FlxBackdrop;
+	var mont:FlxBackdrop;
 
 	override function create()
 	{
@@ -51,21 +48,35 @@ class Hills extends MusicBeatState
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 		FlxG.cameras.add(camHUD);
+		FlxG.camera.zoom = 0.7;
 
-		sky = new FlxSprite(-7, -12, Paths.image("stage/sky"));
-		sky.scrollFactor.set(0.8, 0.8);
-		sky.antialiasing = false;
-		add(sky);
+		bg = new FNFSprite(0, -40);
+		bg.frames = Paths.getSparrowAtlas("hills/stages/Bg");
+		bg.animation.addByPrefix("loop", "Bg Idle", 24);
+		bg.playAnim("loop");
+		bg.scrollFactor.set();
+		bg.scale.set(1.4, 1.4);
+		bg.alpha = 0.78;
+		bg.screenCenter(X);
+		add(bg);
 
-		floor = new FlxSprite(-7, -6, Paths.image("stage/floor"));
-		floor.updateHitbox();
-		floor.antialiasing = false;
-		// CoolTools.setPixelData(floor);
+		floor = new FlxBackdrop(Paths.image("hills/stages/Floor"), 0, 0, true, true, 0, 0);
+		floor.loadGraphic(Paths.image("hills/stages/Floor"), 2035, 1156);
+		// backGround.ID = i;
+		// floor.velocity.x = Player.SPEED;
+		floor.antialiasing = true;
 		add(floor);
 
-		var player = new Player(56.05, 415.25);
+		mont = new FlxBackdrop(Paths.image("hills/stages/Mountains"), 0, 0, true, true, 0, 0);
+		floor.loadGraphic(Paths.image("hills/stages/Mountains"), 2488, 1146);
+		// backGround.ID = i;
+		// mont.velocity.x = Player.SPEED;
+		mont.antialiasing = true;
+		add(mont);
+
+		player = new Player(56.05, 415.25);
 		player.antialiasing = false;
-        player.setGraphicSize(Std.int(player.width * 6));
+		player.setGraphicSize(Std.int(player.width * daPixelZoom));
 		add(player);
 
 		scoreHUD = new FlxSprite(32, 31.35, Paths.image("UI/base/scoreSpr"));
@@ -108,6 +119,9 @@ class Hills extends MusicBeatState
 			rings++;
 
 		time += Math.floor(elapsed * 60);
+
+		if (controls.BACK)
+			Main.switchState(this, new meta.state.menus.SelectState());
 
 		if (FlxG.keys.justPressed.R)
 			FlxG.resetState();

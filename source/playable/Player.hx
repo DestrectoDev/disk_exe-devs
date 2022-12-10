@@ -1,14 +1,14 @@
 package playable;
 
 import flixel.*;
-import flixel.util.*;
 import flixel.util.FlxTimer;
+import meta.*;
 
 class Player extends FlxSprite
 {
 	var holdTimer:Float;
 
-	public var SPEED:Int = 400;
+	public static var SPEED:Int = 400;
 
 	public var GRAVITY:Int = 900;
 
@@ -26,9 +26,18 @@ class Player extends FlxSprite
 		drag.x = SPEED * 4;
 		drag.y = SPEED * 4;
 
-		makeGraphic(5, 5, FlxColor.RED);
+		loadGraphic(Paths.image("hills/characters/tails_assets"), true, 72, 72);
 
-		// loadOffsetFile("tails");
+		animation.add("idle", CoolUtil.numberArray(0, 4), 12, true);
+		animation.add("spindash", CoolUtil.numberArray(5, 7), 12, true);
+		animation.add("charge", CoolUtil.numberArray(8, 10), 12, true);
+		animation.add("lookinup", CoolUtil.numberArray(11, 15), 12, true);
+		animation.add("crouched", CoolUtil.numberArray(16, 20), 12, true);
+		animation.add("running", CoolUtil.numberArray(21, 24), 12, true);
+		animation.add("dash", CoolUtil.numberArray(25, 26), 12, true);
+		animation.add("walk", CoolUtil.numberArray(27, 34), 12, true);
+
+		loadOffsetFile("tails");
 
 		if (!debugMode)
 		{
@@ -44,16 +53,16 @@ class Player extends FlxSprite
 
 	var walkMode:Bool = true;
 
-	// public function loadOffsetFile(char:String = "tails")
-	// {
-	// 	var offset:Array<String> = CoolTools.coolTextFile('assets/data/offsets/${char}Offsets.txt');
+	public function loadOffsetFile(char:String = "tails")
+	{
+		var offset:Array<String> = CoolUtil.coolTextFile('assets/images/characters/${char}Offsets.txt');
 
-	// 	for (i in 0...offset.length)
-	// 	{
-	// 		var data:Array<String> = offset[i].split(' ');
-	// 		addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
-	// 	}
-	// }
+		for (i in 0...offset.length)
+		{
+			var data:Array<String> = offset[i].split(' ');
+			addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
+		}
+	}
 
 	public function moveTails(move:Bool = true, elapsed:Float)
 	{
@@ -110,7 +119,31 @@ class Player extends FlxSprite
 			{
 				new FlxTimer().start(2.5, function(tmr)
 				{
-					SPEED += Std.int(elapsed * 500);
+					var checkLastHold:Int = Math.floor((holdTimer - 0.5) * 10);
+					holdTimer += elapsed;
+					var checkNewHold:Int = Math.floor((holdTimer - 0.5) * 10);
+
+					if (holdTimer > 2.5 && checkNewHold - checkLastHold > 0)
+					{
+						walkMode = false;
+						if (right)
+						{
+							playAnim("running");
+							facing = FlxObject.RIGHT;
+							velocity.x = checkNewHold - checkLastHold * -SPEED + 20;
+						}
+						else if (left)
+						{
+							playAnim("running");
+							facing = FlxObject.LEFT;
+							velocity.x = checkNewHold - checkLastHold * SPEED - 20;
+						}
+						else if (FlxG.keys.anyJustReleased([RIGHT, LEFT, A, D]))
+						{
+							walkMode = true;
+							holdTimer = 0;
+						}
+					}
 				});
 			}
 		}

@@ -64,6 +64,10 @@ class GameOverSubstate extends MusicBeatSubState
 		add(gf);
 		add(dadOpponent);
 		add(bf);
+		
+		if (PlayState.curStage == "green_hill")
+			add(stageDir.redShade);
+
 
 		PlayState.boyfriend.destroy();
 
