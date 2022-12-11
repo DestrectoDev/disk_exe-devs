@@ -41,10 +41,6 @@ class Hills extends MusicBeatState
 	var floor:FlxBackdrop;
 	var mont:FlxBackdrop;
 
-	var bg:FNFSprite;
-	var floor:FlxBackdrop;
-	var mont:FlxBackdrop;
-
 	override function create()
 	{
 		super.create();

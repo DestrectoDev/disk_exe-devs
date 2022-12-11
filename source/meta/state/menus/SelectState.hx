@@ -78,7 +78,7 @@ class SelectState extends MusicBeatState{
            boxThing.playAnim("idle");
            boxThing.addOffset("select", 12, 0);
 
-           boxThing.x = -98 +  (i * 310);
+           boxThing.x = -94 +  (i * 310);
         //    boxThing.y -= 72;
            boxThing.antialiasing = true;
            boxThing.updateHitbox();
@@ -184,6 +184,7 @@ class SelectState extends MusicBeatState{
         FlxG.resetState();
     }
 
+    if (FlxG.mouse.overlaps(button)){
 	pressButton(FlxG.mouse.pressed);
 
     if (FlxG.mouse.justReleased){
@@ -191,6 +192,7 @@ class SelectState extends MusicBeatState{
 				#if windows Sys.exit(escapeTimes); #end
         });
     }
+}
 
 	 box.visible = !curChangeMode;
 
