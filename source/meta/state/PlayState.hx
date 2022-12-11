@@ -619,12 +619,9 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		if (FlxG.keys.pressed.SHIFT){
-           boyfriend.playAnim("hey");
-		   boyfriend.animation.finishCallback = function(name) {boyfriend.dance();
-			
-		   }
-		}
+		// if (FlxG.keys.pressed.SHIFT){
+        //    boyfriend.playAnim("hey");
+		// }
 		
 		if (FlxG.keys.justPressed.B){
 			FlxG.stage.application.window.borderless = !FlxG.stage.application.window.borderless;
@@ -660,10 +657,7 @@ class PlayState extends MusicBeatState
 		if (curTime == 10)	
 			curTime = 0;
 		
-		app.title = "FNF: The Disks Origin's - "
-			+ SONG.song.toUpperCase()
-			+ ' - [SCORE: ${songScore} | Misses: ${misses} | Accuracy: (${Std.string(Math.floor(Timings.getAccuracy() * 100) / 100)}%) - _' 
-			+  comboDisplay + '_ ]';
+		app.title = "FNF: The Disks Origin's - " + SONG.song.toUpperCase() + ' - [SCORE: ${songScore} | MISSES: ${misses} | ACCURACY: (${Std.string(Math.floor(Timings.getAccuracy() * 100) / 100)}%)' /*	+  comboDisplay + */ + ']';
 
 		if (FlxG.keys.justPressed.P){
           jeje();
@@ -1079,7 +1073,8 @@ class PlayState extends MusicBeatState
 		if ((boyfriend != null && boyfriend.animation != null)
 			&& (boyfriend.holdTimer > Conductor.stepCrochet * (4 / 1000) && (!holdControls.contains(true) || boyfriendStrums.autoplay)))
 		{
-			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+			if (boyfriend.animation.curAnim.name.startsWith('sing')
+				&& !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.dance();
 		}
 	}

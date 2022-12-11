@@ -112,7 +112,7 @@ class ClassHUD extends FlxSpriteGroup
 		centerMark.antialiasing = true;
 		add(centerMark);
 
-		scoreHUD = new FlxSprite(32, 32, Paths.image("UI/default/base/scoreSpr"));
+		scoreHUD = new FlxSprite(32, (Init.trueSettings.get('Downscroll') ? 479 : 32), Paths.image("UI/default/base/scoreSpr"));
 		scoreHUD.antialiasing = false;
 		add(scoreHUD);
 
@@ -125,15 +125,16 @@ class ClassHUD extends FlxSpriteGroup
 			judgementNameArray.sort(sortByShit);
 			for (i in 0...judgementNameArray.length)
 			{
-				var textAsset:FlxText = new FlxText(5
+				var textAsset:FlxText = new FlxText(15
 					+ (!left ? (FlxG.width - 10) : 0),
 					(FlxG.height / 2)
 					- (counterTextSize * (judgementNameArray.length / 2))
 					+ (i * counterTextSize), 0, '', counterTextSize);
 				if (!left)
 					textAsset.x -= textAsset.text.length * counterTextSize;
-				textAsset.setFormat(Paths.font("vcr.ttf"), counterTextSize, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				textAsset.setFormat(Paths.font("sonic-hud-font.ttf"), 28, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, 0xff1a3668);
 				textAsset.scrollFactor.set();
+				textAsset.borderSize = 3.45;
 				timingsMap.set(judgementNameArray[i], textAsset);
 				add(textAsset);
 			}
@@ -206,13 +207,20 @@ class ClassHUD extends FlxSpriteGroup
 		var importMisses = PlayState.misses;
 		var comboDisplay:String = (Timings.comboDisplay != null && Timings.comboDisplay != '' ? ' [${Timings.comboDisplay}]' : '');
 
-		scoreBar.text = 'Score: $importSongScore';
+		// scoreBar.text = 'Score: $importSongScore';
+		scoreBar.text = 'Combo Breaks: ' + Std.string(PlayState.misses);
 		// testing purposes
 		var displayAccuracy:Bool = Init.trueSettings.get('Display Accuracy');
-		if (displayAccuracy)
+	 /*	if (displayAccuracy)
 		{
 			scoreBar.text += divider + 'Accuracy: ' + Std.string(Math.floor(Timings.getAccuracy() * 100) / 100) + '%' + comboDisplay;
 			scoreBar.text += divider + 'Combo Breaks: ' + Std.string(PlayState.misses);
+			scoreBar.text += divider + 'Rank: ' + Std.string(Timings.returnScoreRating().toUpperCase());
+		}*/
+		if (displayAccuracy)
+		{
+			scoreBar.text += divider + 'Accuracy: ' + Std.string(Math.floor(Timings.getAccuracy() * 100) / 100) + '%' + comboDisplay;
+			// scoreBar.text += divider + 'Combo Breaks: ' + Std.string(PlayState.misses);
 			scoreBar.text += divider + 'Rank: ' + Std.string(Timings.returnScoreRating().toUpperCase());
 		}
 		scoreBar.text += '\n';

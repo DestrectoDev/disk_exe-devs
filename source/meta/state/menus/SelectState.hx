@@ -149,11 +149,11 @@ class SelectState extends MusicBeatState{
         add(box);
 
 
-        escapeTxt = new FlxText(10, 20, FlxG.width, "1", 32);
+        escapeTxt = new FlxText(5, 5, FlxG.width, "1", 32);
 		escapeTxt.visible = false;
         add(escapeTxt);
 
-        button = new FlxSprite(19, 5, Paths.image("menus/base/button"));
+        button = new FlxSprite(5, -5, Paths.image("menus/base/button"));
         button.updateHitbox();
         add(button);
 
@@ -372,6 +372,8 @@ if (!stopSpam){
         if (pressed){
             button.scale.set(0.7, 0.7);
             button.color = FlxColor.GRAY;
+            button.x += 14;
+			button.y += 9;
 			button.updateHitbox(); 
         }
         else{

@@ -15,6 +15,7 @@ import gameObjects.userInterface.menu.*;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.*;
 import meta.data.dependency.Discord;
+import meta.state.menus.*;
 
 using StringTools;
 
@@ -88,6 +89,8 @@ class StoryMenuState extends MusicBeatState
 
 		var blackBarThingie:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, 56, FlxColor.BLACK);
 		add(blackBarThingie);
+
+		Main.switchState(this, new SelectState());
 
 		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 
