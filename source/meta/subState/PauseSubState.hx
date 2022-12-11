@@ -52,7 +52,7 @@ class PauseSubState extends MusicBeatSubState
 
 		var backGround = new FlxBackdrop(Paths.image("menus/base/back_menu"), 0, 0, true, true, 0, 0);
 		// backGround.ID = i;
-		backGround.velocity.x = -190;
+		backGround.velocity.x = -290;
 		backGround.screenCenter(Y);
 		backGround.antialiasing = true;
 		backGround.alpha = 0;
@@ -90,16 +90,15 @@ class PauseSubState extends MusicBeatSubState
 
 		pene = new FNFSprite(860, 120);
 		pene.frames = Paths.getSparrowAtlas("menus/base/pause_bf");
-		pene.animation.addByIndices("idle", "BF DE PAUSA", [0, 1, 2, 3, 4, 5, 6, 7], "", 24);
-		pene.animation.addByIndices("danceRight", "BF DE PAUSA", [8, 9, 10, 11, 12, 13], "", 24);
+		pene.animation.addByIndices("idle", "BF DE PAUSA", 24);
 		pene.antialiasing = true;
-		pene.playAnim("danceLeft");
+		pene.playAnim("idle");
 		pene.x -= 130;
 		pene.screenCenter(X);
 		add(pene);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
-		FlxTween.tween(backGround, {alpha: 0.4}, 0.4, {ease: FlxEase.quartInOut});
+		FlxTween.tween(backGround, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(levelDeaths, {alpha: 1, y: levelDeaths.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
@@ -113,7 +112,7 @@ class PauseSubState extends MusicBeatSubState
 			// songText.isMenuItem = true;
 			item.loadGraphic(Paths.image("pause/"+menuItems[i]));
 			// songText.targetY = i;
-			item.x = -555 + (i * 450);
+			item.x = -475 + (i * 450);
 			item.y = 384;
 			item.setGraphicSize(Std.int(item.width / 4));	
 			grpMenuShit.add(item);
@@ -208,11 +207,11 @@ class PauseSubState extends MusicBeatSubState
 		for (item in grpMenuShit.members)
 		{
 			if (curSelected == 2)
-				box.x = item.x * ((curSelected + 1) * 4.75);
+				box.x = item.x * ((curSelected + 1) * 6.75);
 			else if (curSelected == 1)
-				box.x = item.x * ((curSelected + 1) * 2.45);
+				box.x = item.x * ((curSelected + 1) * 4.45);
 			else if (curSelected == 0)
-				box.x = item.x * ((curSelected + 1) * -5.51);
+				box.x = item.x * ((curSelected + 1) * 2.51);
 		}
 		//
 	}
