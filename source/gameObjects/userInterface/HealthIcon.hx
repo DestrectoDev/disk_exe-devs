@@ -69,15 +69,18 @@ class HealthIcon extends FlxSprite
 	{
 		if (health < 20){
 			animation.curAnim.curFrame = 1;
-			if (curCharacter == "susnic")PlayState.dadOpponent.iconColor = 0xFF1f2494;
+			if (curCharacter == "susnic")
+				meta.state.PlayState.dadOpponent.iconColor = 0xFF1f2494;
 		}
 		else if (health > 80){
 			animation.curAnim.curFrame = 2;
-			if (curCharacter == "susnic")PlayState.dadOpponent.iconColor = 0xFF436dc1;
+			if (curCharacter == "susnic")
+				meta.state.PlayState.dadOpponent.iconColor = 0xFF436dc1;
 		}
 		else{
 			animation.curAnim.curFrame = 0;
-			if (curCharacter == "susnic")PlayState.dadOpponent.iconColor = 0xFF374daa;
+			if (curCharacter == "susnic")
+				meta.state.PlayState.dadOpponent.iconColor = 0xFF374daa;
 		}
 	}
 
