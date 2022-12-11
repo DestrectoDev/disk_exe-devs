@@ -41,6 +41,10 @@ class Hills extends MusicBeatState
 	var floor:FlxBackdrop;
 	var mont:FlxBackdrop;
 
+	var bg:FNFSprite;
+	var floor:FlxBackdrop;
+	var mont:FlxBackdrop;
+
 	override function create()
 	{
 		super.create();
@@ -102,7 +106,6 @@ class Hills extends MusicBeatState
 		player.antialiasing = false;
 		player.setGraphicSize(Std.int(player.width * 5));
 		player.updateHitbox();
-		add(player);
 
 		scoreHUD = new FlxSprite(32, 31.35, Paths.image("UI/default/base/scoreSpr"));
 		scoreHUD.cameras = [camHUD];
@@ -169,6 +172,9 @@ class Hills extends MusicBeatState
 			rings++;
 
 		time += Math.round(Math.max(elapsed * 60, 2));
+
+		if (controls.BACK)
+			Main.switchState(this, new meta.state.menus.SelectState());
 
 		if (controls.BACK)
 			Main.switchState(this, new meta.state.menus.SelectState());

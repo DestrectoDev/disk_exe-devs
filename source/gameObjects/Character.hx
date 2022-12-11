@@ -493,6 +493,15 @@ class Character extends FNFSprite
 				
 				animation.addByPrefix('hey', 'Yeah', 24);
 
+			if (PlayState.health == 0){
+				tex = Paths.getSparrowAtlas('characters/bf/BF_muerte');
+				frames = tex;
+				animation.addByPrefix('idle', 'muerte', 24, false);
+				animation.addByPrefix('firstDeath', 'muerte', 24, false);
+				animation.addByPrefix('deathLoop', 'loop', 24, false);
+				animation.addByPrefix('deathConfirm', 'confirm', 24, false);
+				}
+
 				flipX = true;
 
 				loadOffsetFile();
@@ -501,11 +510,10 @@ class Character extends FNFSprite
 			case 'bffurry-dead':
 				tex = Paths.getSparrowAtlas('characters/bf/BF_muerte');
 				frames = tex;
-				animation.addByPrefix('idle', 'muerte', 24, false);
 				animation.addByPrefix('firstDeath', 'muerte', 24, false);
 				animation.addByPrefix('deathLoop', 'loop', 24, false);
 				animation.addByPrefix('deathConfirm', 'confirm', 24, false);
-		
+				
 				flipX = true;
 
 				loadOffsetFile();

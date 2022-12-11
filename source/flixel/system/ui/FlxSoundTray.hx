@@ -76,6 +76,7 @@ class FlxSoundTray extends Sprite
 		text.gridFitType = GridFitType.PIXEL;
 		#else
 		#end
+		
 		var dtf:TextFormat = new TextFormat(/*FlxAssets.FONT_DEFAULT*/ Paths.font("needlemouse-serif.ttf"), 10, 0xffffff);
 		dtf.align = TextFormatAlign.CENTER;
 		dtf.font = Paths.font("needlemouse-serif.ttf");
@@ -113,7 +114,8 @@ class FlxSoundTray extends Sprite
 		// 	muted = !muted;
 		// }
 
-		text.text = (FlxG.sound.muted ?  "MUTED" : "VOLUME");
+		// text.text = (muted ?  "MUTED" : "VOLUME");
+		text.text = (FlxG.sound.muted ? "MUTED" : "VOLUME");
 
 		if (_timer > 0)
 		{

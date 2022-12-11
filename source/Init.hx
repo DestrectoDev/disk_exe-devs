@@ -201,9 +201,6 @@ class Init extends FlxState
 		'UI_DOWN' => [[FlxKey.DOWN, S], 9],
 		'UI_LEFT' => [[FlxKey.LEFT, A], 10],
 		'UI_RIGHT' => [[FlxKey.RIGHT, D], 11],
-		'VOL_DOWN_KEY' => [[FlxKey.NUMPADMINUS, MINUS], 12],
-		'VOL_UP_KEY' => [[FlxKey.NUMPADPLUS, PLUS], 13],
-		'MUTE_KEY' => [[FlxKey.NUMPADZERO, ZERO], 14]
 	];
 
 	public static var filters:Array<BitmapFilter> = []; // the filters the game has active

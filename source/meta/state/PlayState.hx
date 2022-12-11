@@ -619,10 +619,14 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.SHIFT){
+		if (FlxG.keys.pressed.SHIFT){
            boyfriend.playAnim("hey");
 		}
-
+		if (FlxG.keys.justReleased.SHIFT)
+		{
+			if (curBeat % 2 == 0)
+				boyfriend.dance();
+		}
 		if (FlxG.keys.justPressed.B){
 			FlxG.stage.application.window.borderless = !FlxG.stage.application.window.borderless;
 		}
@@ -776,6 +780,10 @@ class PlayState extends MusicBeatState
 						camDisplaceY = 0;
 					}
 					lastSection = Std.int(curStep / 16);
+				}
+			
+				if (SONG.song == "Hills"){
+                   vocals.volume = 2;  
 				}
 
 				if (!PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
@@ -1095,6 +1103,18 @@ class PlayState extends MusicBeatState
 			coolNote.wasGoodHit = true;
 			vocals.volume = 1;
 
+			if (coolNote.isSustainNote){
+			var timing:Int = 0; 
+			if (timing > 1)
+				timing = 0;
+			if (timing == 0)
+				timing++;
+			if (timing == 0) 
+			characterPlayAnimation(coolNote, character);
+			else if (timing == 1) 
+			boyfriend.animation.curAnim.curFrame = 2;
+			}
+			else
 			characterPlayAnimation(coolNote, character);
 			if (characterStrums.receptors.members[coolNote.noteData] != null)
 				characterStrums.receptors.members[coolNote.noteData].playAnim('confirm', true);
@@ -1615,7 +1635,7 @@ class PlayState extends MusicBeatState
 		Conductor.changeBPM(songData.bpm);
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
-		songDetails = CoolUtil.dashToSpace(SONG.song) + ' - ' + CoolUtil.difficultyFromNumber(storyDifficulty);
+		songDetails = CoolUtil.dashToSpace(SONG.song) + ' - ' + "HARD";
 
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + songDetails;
@@ -2023,8 +2043,7 @@ class PlayState extends MusicBeatState
 
 			var startCircle = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/circleplaceholder'));
 			startCircle.cameras = [extraHUD];
-			startCircle.screenCenter();
-
+			// startCircle.screenCenter();
 			var song_ = SONG.song.toLowerCase();
 
 			switch (song_){
@@ -2033,12 +2052,9 @@ class PlayState extends MusicBeatState
 			default:
 					startCircle.color = 0xFFF9CF51;
 			}
-
 			camHUD.alpha = 0;
 			var shit = Std.int(startCircle.width * 0.25);
-
 			startCircle.setGraphicSize(shit);
-			startCircle.x = -700;
 			add(startCircle);
 
 
@@ -2046,14 +2062,13 @@ class PlayState extends MusicBeatState
 			startText.cameras = [extraHUD];
 			// startText.screenCenter();
 			startText.setGraphicSize(shit);
-			startText.x = 700;
+			// startText.x = 700;
 			add(startText);
 
 			var assText = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/act1'));
 			assText.cameras = [extraHUD];
 			// assText.screenCenter();
 			assText.setGraphicSize(shit);
-			assText.x = 600;
 
 			if (SONG.song.toLowerCase() == "hill")
 				assText.visible = true;
@@ -2065,16 +2080,18 @@ class PlayState extends MusicBeatState
 			for (i in 0...strumLines.length){
 				strumHUD[i].alpha = 0;
 			}
+			new FlxTimer().start(0.6, function(tmr:FlxTimer)
+			{
+				FlxTween.tween(startCircle, {x: 54}, 0.2);
+				FlxTween.tween(startText, {x: 23}, 0.5);
+				FlxTween.tween(assText, {x: 67}, 0.5);
+			});
 
-				FlxTween.tween(startCircle, {x: 450}, 0.2);
-				FlxTween.tween(startText, {x: 340}, 0.5);
-				FlxTween.tween(assText, {x: 350}, 0.5);
-
-			new FlxTimer().start(2.5, function(tmr:FlxTimer)
+			new FlxTimer().start(1.9, function(tmr:FlxTimer)
 			{
 				for (i in 0...strumLines.length)
 				{
-					FlxTween.tween(strumHUD[i], {alpha: 1}, 1);
+				FlxTween.tween(strumHUD[i], {alpha: 1}, 1);
 				}
 				FlxTween.tween(camHUD, {alpha: 1}, 1);
 				FlxTween.tween(startCircle, {alpha: 0}, 1);

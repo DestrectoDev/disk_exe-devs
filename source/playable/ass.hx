@@ -1,12 +1,11 @@
 package playable;
 
 import flixel.*;
+import flixel.util.*;
 import flixel.util.FlxTimer;
 
 class Player extends FlxSprite
 {
-	var swag:SwagState;
-
 	var holdTimer:Float;
 
 	public var SPEED:Int = 400;
@@ -19,8 +18,6 @@ class Player extends FlxSprite
 
 	public var animOffsets:Map<String, Array<Dynamic>>;
 
-	var controls = SwagState.controlass;
-
 	public function new(X, Y)
 	{
 		super(X, Y);
@@ -29,18 +26,9 @@ class Player extends FlxSprite
 		drag.x = SPEED * 4;
 		drag.y = SPEED * 4;
 
-		loadGraphic(Paths.image("characters/tails_assets"), true, 72, 72);
+		makeGraphic(5, 5, FlxColor.RED);
 
-		animation.add("idle", CoolTools.containerArray(0, 4), 12, true);
-		animation.add("spindash", CoolTools.containerArray(5, 7), 12, true);
-		animation.add("charge", CoolTools.containerArray(8, 10), 12, true);
-		animation.add("lookinup", CoolTools.containerArray(11, 15), 12, true);
-		animation.add("crouched", CoolTools.containerArray(16, 20), 12, true);
-		animation.add("running", CoolTools.containerArray(21, 24), 12, true);
-		animation.add("dash", CoolTools.containerArray(25, 26), 12, true);
-		animation.add("walk", CoolTools.containerArray(27, 34), 12, true);
-
-		loadOffsetFile("tails");
+		// loadOffsetFile("tails");
 
 		if (!debugMode)
 		{
@@ -56,16 +44,16 @@ class Player extends FlxSprite
 
 	var walkMode:Bool = true;
 
-	public function loadOffsetFile(char:String = "tails")
-	{
-		var offset:Array<String> = CoolTools.coolTextFile('assets/data/offsets/${char}Offsets.txt');
+	// public function loadOffsetFile(char:String = "tails")
+	// {
+	// 	var offset:Array<String> = CoolTools.coolTextFile('assets/data/offsets/${char}Offsets.txt');
 
-		for (i in 0...offset.length)
-		{
-			var data:Array<String> = offset[i].split(' ');
-			addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
-		}
-	}
+	// 	for (i in 0...offset.length)
+	// 	{
+	// 		var data:Array<String> = offset[i].split(' ');
+	// 		addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
+	// 	}
+	// }
 
 	public function moveTails(move:Bool = true, elapsed:Float)
 	{
@@ -122,31 +110,7 @@ class Player extends FlxSprite
 			{
 				new FlxTimer().start(2.5, function(tmr)
 				{
-					var checkLastHold:Int = Math.floor((holdTimer - 0.5) * 10);
-					holdTimer += elapsed;
-					var checkNewHold:Int = Math.floor((holdTimer - 0.5) * 10);
-
-					if (holdTimer > 2.5 && checkNewHold - checkLastHold > 0)
-					{
-						walkMode = false;
-						if (right)
-						{
-							playAnim("running");
-							facing = FlxObject.RIGHT;
-							velocity.x = checkNewHold - checkLastHold * -SPEED + 20;
-						}
-						else if (left)
-						{
-							playAnim("running");
-							facing = FlxObject.LEFT;
-							velocity.x = checkNewHold - checkLastHold * SPEED - 20;
-						}
-						else if (FlxG.keys.anyJustReleased([RIGHT, LEFT, A, D]))
-						{
-							walkMode = true;
-							holdTimer = 0;
-						}
-					}
+					SPEED += Std.int(elapsed * 500);
 				});
 			}
 		}
