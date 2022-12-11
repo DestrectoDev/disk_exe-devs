@@ -7,11 +7,13 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import gameObjects.*;
 import gameObjects.Boyfriend;
+import lime.app.Application;
 import meta.MusicBeat.MusicBeatSubState;
 import meta.data.Conductor.BPMChangeEvent;
 import meta.data.Conductor;
 import meta.state.*;
 import meta.state.menus.*;
+
 
 class GameOverSubstate extends MusicBeatSubState
 {
@@ -24,6 +26,8 @@ class GameOverSubstate extends MusicBeatSubState
 	var stageDir:Stage;
 	var gf:Character;
 	var dadOpponent:Character;
+	var app = Application.current.window;
+	
 	public function new(x:Float, y:Float)
 	{
 		var daBoyfriendType = PlayState.boyfriend.curCharacter;
@@ -88,6 +92,7 @@ class GameOverSubstate extends MusicBeatSubState
 		FlxG.camera.target = null;
 
 		bf.playAnim('firstDeath');
+
 	}
 
 	override function update(elapsed:Float)
@@ -131,6 +136,12 @@ class GameOverSubstate extends MusicBeatSubState
 			dadOpponent.dance();
 			gf.dance();
 		}
+
+		if (curBeat % 2 == 0)
+		app.title = "FNF: The Disks Origin's - [DEAD-BUMP] -";
+		if (curBeat % 2 == 1)
+		app.title = "FNF: The Disks Origin's - [DEAD] -";
+
 
 		FlxG.log.add('beat');
 	}

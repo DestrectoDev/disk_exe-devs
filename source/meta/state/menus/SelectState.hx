@@ -10,6 +10,7 @@ import flixel.math.*;
 import flixel.text.*;
 import flixel.tweens.*;
 import flixel.util.*;
+import lime.app.Application;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.*;
 import meta.data.dependency.*;
@@ -42,7 +43,7 @@ class SelectState extends MusicBeatState{
     var data:FNFSprite;
 
 	public static var blockedWeek:Array<Bool> = [true, false, false, false];
-
+	var app = Application.current.window;
     var escapeTxt:FlxText;
     
     override public function create(){
@@ -155,6 +156,8 @@ class SelectState extends MusicBeatState{
         button = new FlxSprite(19, 5, Paths.image("menus/base/button"));
         button.updateHitbox();
         add(button);
+
+        app.title = "FNF: The Disks Origin's";
     }
 
     var escapeTimes:Int = 0;
@@ -163,6 +166,7 @@ class SelectState extends MusicBeatState{
     
     override public function update(elapsed:Float){
      super.update(elapsed);
+
 
      if (escapeTimes > 0){
          escapeTxt.visible = true;

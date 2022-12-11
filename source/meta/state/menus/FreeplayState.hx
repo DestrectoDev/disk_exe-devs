@@ -14,6 +14,7 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.misc.ColorTween;
 import flixel.util.FlxColor;
 import gameObjects.userInterface.HealthIcon;
+import lime.app.Application;
 import lime.utils.Assets;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.*;
@@ -58,7 +59,7 @@ class FreeplayState extends MusicBeatState
 
 	private var existingSongs:Array<String> = [];
 	private var existingDifficulties:Array<Array<String>> = [];
-
+	var app = Application.current.window;
 	var backGround:FlxBackdrop;
 
 	override function create()
@@ -203,6 +204,9 @@ class FreeplayState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+
+		app.title = "FNF: The Disks Origin's - CHOSING [" + songs[curSelected].songName.toUpperCase() + "] -";
 
 
 		var lerpVal = Main.framerateAdjust(0.1);
