@@ -90,9 +90,10 @@ class PauseSubState extends MusicBeatSubState
 
 		pene = new FNFSprite(860, 120);
 		pene.frames = Paths.getSparrowAtlas("menus/base/pause_bf");
-		pene.animation.addByPrefix("idle", "BF DE PAUSA", 24);
+		pene.animation.addByIndices("idle", "BF DE PAUSA", [0, 1, 2, 3, 4, 5, 6, 7], "", 24);
+		pene.animation.addByIndices("danceRight", "BF DE PAUSA", [8, 9, 10, 11, 12, 13], "", 24);
 		pene.antialiasing = true;
-		pene.playAnim("idle");
+		pene.playAnim("danceLeft");
 		pene.x -= 130;
 		pene.screenCenter(X);
 		add(pene);
@@ -133,12 +134,11 @@ class PauseSubState extends MusicBeatSubState
     
 	var pene:FNFSprite;
 	
+	var danced:Bool = false;
 	override public function beatHit(){
 		super.beatHit();
-		if (curBeat % 2 == 0){
-	    if (pene != null)
-			pene.playAnim("idle");
-	    }
+
+		pene.playAnim("idle");
 	}
 
 	override function update(elapsed:Float)

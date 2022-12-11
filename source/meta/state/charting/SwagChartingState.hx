@@ -992,6 +992,7 @@ class SwagChartingState extends MusicBeatState
 			changeBPM: false,
 			mustHitSection: true,
 			sectionNotes: [],
+			events: [],
 			typeOfSection: 0,
 			altAnim: false
 		};
