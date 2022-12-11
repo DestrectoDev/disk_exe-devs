@@ -355,7 +355,7 @@ dadStrums.visible = false;
 		add(strumLines);
 
 		uiHUD = new ClassHUD();
-		uiHUD.alpha = 0.7;
+		uiHUD.alpha = 0.6;
 		uiHUD.iconP1.alpha = 1;
 		uiHUD.iconP2.alpha = 1;
 		uiHUD.healthBar.alpha = 0.8;
@@ -1101,18 +1101,18 @@ dadStrums.visible = false;
 			coolNote.wasGoodHit = true;
 			vocals.volume = 1;
 
-			if (coolNote.isSustainNote){
-			var timing:Int = 0; 
-			if (timing > 1)
-				timing = 0;
-			if (timing == 0)
-				timing++;
-			if (timing == 0) 
-			characterPlayAnimation(coolNote, character);
-			else if (timing == 1) 
-			boyfriend.animation.curAnim.curFrame = 2;
-			}
-			else
+			// if (coolNote.isSustainNote){
+			// var timing:Int = 0; 
+			// if (timing > 1)
+			// 	timing = 0;
+			// if (timing == 0)
+			// 	timing++;
+			// if (timing == 0) 
+			// characterPlayAnimation(coolNote, character);
+			// else if (timing == 1) 
+			// boyfriend.animation.curAnim.curFrame = 2;
+			// }
+			// else
 			characterPlayAnimation(coolNote, character);
 			if (characterStrums.receptors.members[coolNote.noteData] != null)
 				characterStrums.receptors.members[coolNote.noteData].playAnim('confirm', true);

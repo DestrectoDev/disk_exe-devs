@@ -126,7 +126,7 @@ class ClassHUD extends FlxSpriteGroup
 			for (i in 0...judgementNameArray.length)
 			{
 				var textAsset:FlxText = new FlxText(15
-					+ (!left ? (FlxG.width - 10) : 0),
+					+ (!left ? (FlxG.width - 25) : 25),
 					(FlxG.height / 2)
 					- (counterTextSize * (judgementNameArray.length / 2))
 					+ (i * counterTextSize), 0, '', counterTextSize);
