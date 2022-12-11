@@ -90,7 +90,7 @@ class PauseSubState extends MusicBeatSubState
 
 		pene = new FNFSprite(860, 120);
 		pene.frames = Paths.getSparrowAtlas("menus/base/pause_bf");
-		pene.animation.addByIndices("idle", "BF DE PAUSA", 24);
+		pene.animation.addByPrefix("idle", "BF DE PAUSA", 24);
 		pene.antialiasing = true;
 		pene.playAnim("idle");
 		pene.x -= 130;
