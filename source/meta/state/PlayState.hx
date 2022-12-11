@@ -53,6 +53,7 @@ import meta.data.dependency.Discord;
 class PlayState extends MusicBeatState
 {
 	public static var startTimer:FlxTimer;
+
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -330,10 +331,10 @@ class PlayState extends MusicBeatState
 		//
 		var placement = (FlxG.width / 2);
 		dadStrums = new Strumline(placement - (FlxG.width / 4), this, dadOpponent, false, true, false, 4, Init.trueSettings.get('Downscroll'));
-		dadStrums.visible = false;
+		dadStrums.visible = !Init.trueSettings.get('Centered Notefield');
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
-
+dadStrums.visible = false;
 		strumLines.add(dadStrums);
 		strumLines.add(boyfriendStrums);
 
@@ -611,7 +612,6 @@ class PlayState extends MusicBeatState
 		app.title = "Sonic.exe";
 	}
 }
-	var comboDisplay:String = (Timings.comboDisplay != null && Timings.comboDisplay != '' ? ' [${Timings.comboDisplay}]' : '');
 
 	override public function update(elapsed:Float)
 	{
@@ -620,10 +620,7 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		if (FlxG.keys.pressed.SHIFT){
-           boyfriend.playAnim("hey");
-		   boyfriend.animation.finishCallback = function(name) {boyfriend.dance();
-			
-		   }
+           boyfriend.playAnim("hey", false);
 		}
 		
 		if (FlxG.keys.justPressed.B){
@@ -660,10 +657,8 @@ class PlayState extends MusicBeatState
 		if (curTime == 10)	
 			curTime = 0;
 		
-		app.title = "FNF: The Disks Origin's - "
-			+ SONG.song.toUpperCase()
-			+ ' - [SCORE: ${songScore} | Misses: ${misses} | Accuracy: (${Std.string(Math.floor(Timings.getAccuracy() * 100) / 100)}%) - _' 
-			+  comboDisplay + '_ ]';
+		app.title = "FNF: The Disks Origin's - " + " SCORE: " + songScore + " - MISSES: " + misses +
+		" - ACC: " + Std.string(Math.floor(Timings.getAccuracy() * 100) / 100) + '% -';
 
 		if (FlxG.keys.justPressed.P){
           jeje();
@@ -1638,7 +1633,7 @@ class PlayState extends MusicBeatState
 		Conductor.changeBPM(songData.bpm);
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
-		songDetails = CoolUtil.dashToSpace(SONG.song) + ' - ' + "[HARD]";
+		songDetails = CoolUtil.dashToSpace(SONG.song) + ' - ' + "HARD";
 
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + songDetails;
