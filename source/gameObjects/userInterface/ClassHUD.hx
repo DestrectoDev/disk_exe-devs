@@ -112,7 +112,7 @@ class ClassHUD extends FlxSpriteGroup
 		centerMark.antialiasing = true;
 		add(centerMark);
 
-		scoreHUD = new FlxSprite(32, 754, Paths.image("UI/default/scoreSpr"));
+		scoreHUD = new FlxSprite(32, 32, Paths.image("UI/default/scoreSpr"));
 		scoreHUD.antialiasing = false;
 		add(scoreHUD);
 
