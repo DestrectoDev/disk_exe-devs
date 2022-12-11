@@ -105,14 +105,14 @@ class ClassHUD extends FlxSpriteGroup
 		cornerMark.antialiasing = true;
 		add(cornerMark);
 
-		centerMark = new FlxText(0, (Init.trueSettings.get('Downscroll') ? FlxG.height - 40 : 10), 0, '- ${infoDisplay + " [" + "HARD" +  "] -");
+		centerMark = new FlxText(0, (Init.trueSettings.get('Downscroll') ? FlxG.height - 40 : 10), 0, '- ${infoDisplay}'+ " [" + "HARD" +  "] -");
 		centerMark.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE);
 		centerMark.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
 		centerMark.screenCenter(X);
 		centerMark.antialiasing = true;
 		add(centerMark);
 
-		scoreHUD = new FlxSprite(32, 32, Paths.image("UI/default/scoreSpr"));
+		scoreHUD = new FlxSprite(32, 32, Paths.image("UI/default/base/scoreSpr"));
 		scoreHUD.antialiasing = false;
 		add(scoreHUD);
 
