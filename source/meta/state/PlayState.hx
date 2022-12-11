@@ -335,7 +335,7 @@ class PlayState extends MusicBeatState
 		boyfriendStrums = new Strumline(placement + (!Init.trueSettings.get('Centered Notefield') ? (FlxG.width / 4) : 0), this, boyfriend, true, false, true,
 			4, Init.trueSettings.get('Downscroll'));
 
-		strumLines.add(dadStrums);
+		//strumLines.add(dadStrums);
 		strumLines.add(boyfriendStrums);
 
 		// strumline camera setup
