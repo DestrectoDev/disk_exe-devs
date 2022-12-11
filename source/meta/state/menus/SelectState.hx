@@ -8,6 +8,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.*;
 import flixel.text.*;
+import flixel.tweens.*;
 import flixel.util.*;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.*;
@@ -41,6 +42,8 @@ class SelectState extends MusicBeatState{
     var data:FNFSprite;
 
 	public static var blockedWeek:Array<Bool> = [true, false, false, false];
+
+    var escapeTxt:FlxText;
     
     override public function create(){
 
@@ -60,7 +63,7 @@ class SelectState extends MusicBeatState{
 
 		var backGround = new FlxBackdrop(Paths.image("menus/base/back_menu"), 0, 0, true, true, 0, 0);
 		// backGround.ID = i;
-		backGround.velocity.x = -190;
+		backGround.velocity.x = -310;
 		backGround.screenCenter(Y);
 		backGround.antialiasing = true;
 
@@ -143,12 +146,35 @@ class SelectState extends MusicBeatState{
 			changeAlt();
         
         add(box);
+
+
+        escapeTxt = new FlxText(10, 20, FlxG.width, "1", 32);
+		escapeTxt.visible = false;
+        add(escapeTxt);
+
+        button = new FlxSprite(19, 5, Paths.image("menus/base/button"));
+        button.updateHitbox();
+        add(button);
     }
+
+    var escapeTimes:Int = 0;
 
     var i = 4;
     
     override public function update(elapsed:Float){
      super.update(elapsed);
+
+     if (escapeTimes > 0){
+         escapeTxt.visible = true;
+         escapeTxt.text = "times: " + escapeTimes;
+     }
+     if (escapeTimes > 2){
+			#if windows Sys.exit(escapeTimes); #end
+     }
+
+    if (FlxG.keys.justPressed.Q){
+        escapeTimes++;
+     }
 
     // lockGrp.members[i].setPosition(boxThing.x, boxThing.y - (lockGrp.members[i].height / 2));
     if (FlxG.keys.justPressed.R){
@@ -158,15 +184,31 @@ class SelectState extends MusicBeatState{
         FlxG.resetState();
     }
 
-   
+	pressButton(FlxG.mouse.pressed);
+
+    if (FlxG.mouse.justReleased){
+        new FlxTimer().start(1.5, function (tmr:FlxTimer) {
+				#if windows Sys.exit(escapeTimes); #end
+        });
+    }
 
 	 box.visible = !curChangeMode;
 
 	if (!curChangeMode) {
 	   boxGrp.members[curSelected].playAnim("idle");
+			// FlxTween.tween(ach, {y: 619}, 1, {ease: FlxEase.circInOut});
+			// FlxTween.tween(sett, {y: 619}, 1, {ease: FlxEase.circInOut});
+			// FlxTween.tween(vic, {y: 613}, 1, {ease: FlxEase.circInOut});
+			// FlxTween.tween(data, {y: 509}, 1, {ease: FlxEase.circInOut});
+			// FlxTween.tween(box, {y: 596.3}, 1, {ease: FlxEase.circInOut});
     }
 	else {
 	   boxGrp.members[curSelected].playAnim("select");
+    //    FlxTween.tween(ach, {y: 850}, 1, {ease: FlxEase.circInOut});
+	// 		FlxTween.tween(sett, {y: 850}, 1, {ease: FlxEase.circInOut});
+	// 		FlxTween.tween(vic, {y: 850}, 1, {ease: FlxEase.circInOut});
+	// 		FlxTween.tween(data, {y: 850}, 1, {ease: FlxEase.circInOut});
+	// 		FlxTween.tween(box, {y: 850.3}, 1, {ease: FlxEase.circInOut});
     }
 
 
@@ -266,7 +308,7 @@ if (!stopSpam){
             case 0:
                 Main.switchState(this, new FreeplayState());
             case 1:
-				Main.switchState(this, new TitleState());
+				Main.switchState(this, new Hills());
             case 2:
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
@@ -319,4 +361,17 @@ if (!stopSpam){
 			FlxG.sound.play(Paths.sound('cancelMenu'));
         }
 	}
+	var button:FlxSprite;
+    function pressButton(pressed:Bool = false) {
+        if (pressed){
+            button.scale.set(0.7, 0.7);
+            button.color = FlxColor.GRAY;
+			button.updateHitbox(); 
+        }
+        else{
+            button.scale.set(1, 1);
+            button.color = FlxColor.WHITE;
+			button.updateHitbox();
+         }
+    }
 }

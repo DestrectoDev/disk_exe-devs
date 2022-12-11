@@ -94,7 +94,6 @@ class ClassHUD extends FlxSpriteGroup
 		scoreBar.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
 		scoreBar.setBorderStyle(OUTLINE, FlxColor.BLACK, 1.5);
 		updateScoreText();
-		scoreBar.alpha = 0.6;
 		// scoreBar.scrollFactor.set();
 		scoreBar.antialiasing = true;
 		add(scoreBar);
@@ -115,7 +114,6 @@ class ClassHUD extends FlxSpriteGroup
 
 		scoreHUD = new FlxSprite(32, 754, Paths.image("UI/default/scoreSpr"));
 		scoreHUD.antialiasing = false;
-		scoreHUD.alpha = 0.78;
 		add(scoreHUD);
 
 		// counter

@@ -59,7 +59,7 @@ class FlxSoundTray extends Sprite
 		visible = false;
 		scaleX = _defaultScale;
 		scaleY = _defaultScale;
-		var tmp:Bitmap = new Bitmap(new BitmapData(_width, 30, true, 0x7F000000));
+		var tmp:Bitmap = new Bitmap(new BitmapData(_width, 50, true, 0x7F000000));
 		screenCenter();
 		addChild(tmp);
 
@@ -76,12 +76,12 @@ class FlxSoundTray extends Sprite
 		text.gridFitType = GridFitType.PIXEL;
 		#else
 		#end
-		var dtf:TextFormat = new TextFormat(/*FlxAssets.FONT_DEFAULT*/ Paths.font("vcr.ttf"), 10, 0xffffff);
+		var dtf:TextFormat = new TextFormat(/*FlxAssets.FONT_DEFAULT*/ Paths.font("needlemouse-serif.ttf"), 10, 0xffffff);
 		dtf.align = TextFormatAlign.CENTER;
-		dtf.font = Paths.font("vcr.ttf");
+		dtf.font = Paths.font("needlemouse-serif.ttf");
 		text.defaultTextFormat = dtf;
 		addChild(text);
-		text.y = 16;
+		text.y = 26;
 
 		var bx:Int = 10;
 		var by:Int = 14;
@@ -89,13 +89,13 @@ class FlxSoundTray extends Sprite
 
 		for (i in 0...10)
 		{
-			tmp = new Bitmap(new BitmapData(4, i + 1, false, 0xFFb31212));
+			tmp = new Bitmap(new BitmapData(3, 11, false, 0xFFb31212));
 			tmp.x = bx;
 			tmp.y = by;
 			addChild(tmp);
 			_bars.push(tmp);
 			bx += 6;
-			by--;
+			// by--;
 		}
 
 		y = -height;
@@ -109,9 +109,9 @@ class FlxSoundTray extends Sprite
 	{
 		// Animate stupid sound tray thing
 
-		if (FlxG.keys.anyJustPressed([NUMPADZERO, ZERO])){
-			muted = !muted;
-		}
+		// if (FlxG.keys.anyJustPressed([NUMPADZERO, ZERO])){
+		// 	muted = !muted;
+		// }
 
 		text.text = (FlxG.sound.muted ?  "MUTED" : "VOLUME");
 
@@ -145,7 +145,7 @@ class FlxSoundTray extends Sprite
 	{
 		if (!Silent)
 		{
-			var sound = FlxAssets.getSound("flixel/sounds/beep");
+			var sound = Paths.sound('sonidito_de_selector');
 			if (sound != null)
 				FlxG.sound.load(sound).play();
 		}

@@ -91,7 +91,15 @@ class CoolUtil
 
 		return swagOffsets;
 	}
-
+	public static function numberContainer(min:Int, ?max = 0):Array<Int>
+	{
+		var dumbArray:Array<Int> = [];
+		for (i in min...max)
+		{
+			dumbArray.push(i);
+		}
+		return dumbArray;
+	}
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
 	{
 		var dumbArray:Array<Int> = [];

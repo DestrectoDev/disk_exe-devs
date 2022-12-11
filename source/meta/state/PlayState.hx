@@ -355,7 +355,7 @@ class PlayState extends MusicBeatState
 		add(strumLines);
 
 		uiHUD = new ClassHUD();
-		uiHUD.alpha = 0.6;
+		uiHUD.alpha = 0.7;
 		uiHUD.iconP1.alpha = 1;
 		uiHUD.iconP2.alpha = 1;
 		uiHUD.healthBar.alpha = 0.8;

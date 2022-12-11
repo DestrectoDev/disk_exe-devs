@@ -24,7 +24,7 @@ class PauseSubState extends MusicBeatSubState
 {
 	var grpMenuShit:FlxTypedGroup<FNFSprite>;
 
-	var menuItems:Array<String> = ['resumen', 'restart', 'exit'];
+	var menuItems:Array<String> = ['resume', 'restart', 'exit'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -88,11 +88,12 @@ class PauseSubState extends MusicBeatSubState
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
 		levelDeaths.x = FlxG.width - (levelDeaths.width + 20);
 
-		pene = new FNFSprite(860, 90);
+		pene = new FNFSprite(860, 120);
 		pene.frames = Paths.getSparrowAtlas("menus/base/pause_bf");
 		pene.animation.addByPrefix("idle", "BF DE PAUSA", 24);
 		pene.antialiasing = true;
 		pene.playAnim("idle");
+		pene.x -= 130;
 		pene.screenCenter(X);
 		add(pene);
 
@@ -111,15 +112,17 @@ class PauseSubState extends MusicBeatSubState
 			// songText.isMenuItem = true;
 			item.loadGraphic(Paths.image("pause/"+menuItems[i]));
 			// songText.targetY = i;
-			item.x = 120 + (i * 250);
-			item.y = 334;
+			item.x = -555 + (i * 450);
+			item.y = 384;
+			item.setGraphicSize(Std.int(item.width / 4));	
 			grpMenuShit.add(item);
 		}
 
-		box = new FNFSprite(grpMenuShit.members[0].x, 0);
+		box = new FNFSprite(grpMenuShit.members[0].x + (grpMenuShit.members[0].width / 2), 0);
 		box.loadGraphic(Paths.image("pause/red"));
 		box.y = grpMenuShit.members[0].y - (box.height / 2);
-		box.antialiasign = false;
+		box.antialiasing = false;
+		box.setGraphicSize(Std.int(box.width / 4));
 		add(box);
 
 		changeSelection();
@@ -161,11 +164,11 @@ class PauseSubState extends MusicBeatSubState
 
 			switch (daSelected)
 			{
-				case "Resume":
+				case "resume":
 					close();
-				case "Restart Song":
+				case "restart":
 					Main.switchState(this, new PlayState());
-				case "Exit to menu":
+				case "exit":
 					PlayState.resetMusic();
 					PlayState.deaths = 0;
 
@@ -205,11 +208,11 @@ class PauseSubState extends MusicBeatSubState
 		for (item in grpMenuShit.members)
 		{
 			if (curSelected == 2)
-				box.x = item.x * ((curSelected + 1) * 9.75);
-			else if (curAlt == 1)
-				box.x = item.x * ((curSelected + 1) * 7.45);
-			else if (curAlt == 0)
-				box.x = item.x * ((curSelected + 1) * 0.51);
+				box.x = item.x * ((curSelected + 1) * 4.75);
+			else if (curSelected == 1)
+				box.x = item.x * ((curSelected + 1) * 2.45);
+			else if (curSelected == 0)
+				box.x = item.x * ((curSelected + 1) * -5.51);
 		}
 		//
 	}
