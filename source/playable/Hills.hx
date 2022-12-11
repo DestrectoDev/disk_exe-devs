@@ -10,6 +10,8 @@ import flixel.util.*;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.dependency.*;
 import meta.state.*;
+import flixel.util.FlxCollision;
+import flixel.group.FlxGroup;
 import playable.*;
 
 class Hills extends MusicBeatState
@@ -20,6 +22,8 @@ class Hills extends MusicBeatState
 
 	var camHUD:FlxCamera;
 
+
+	var cameraCollision:FlxGroup;
 	var score:Int = 0;
 	var rings:Int = 0;
 	var time:Float = 0;
@@ -44,6 +48,8 @@ class Hills extends MusicBeatState
 	override function create()
 	{
 		super.create();
+
+		cameraCollision = FlxCollision.createCameraWall(FlxG.camera, true, 1); //camera collision shit
 
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
@@ -100,8 +106,8 @@ class Hills extends MusicBeatState
 
 		player = new Player(56.05, 415.25);
 		player.antialiasing = false;
-		player.setGraphicSize(Std.int(player.width * 5));
-		player.updateHitbox();
+		player.setGraphicSize(Std.int(player.width * 5.6));
+		add(player);
 
 		scoreHUD = new FlxSprite(32, 31.35, Paths.image("UI/default/base/scoreSpr"));
 		scoreHUD.cameras = [camHUD];
@@ -121,8 +127,8 @@ class Hills extends MusicBeatState
 		// collisionShit.makeGraphic(1950, 935, FlxColor.GREEN);
 		// collisionShit.loadGraphic(Paths.image("hills/stages/stupidColl"));
 		collisionShit.y = 579;
+		collisionShit.alpha = 0;
 		collisionShit.immovable = true;
-		collisionShit.updateHitbox();
 		// collisionShit.x = -362 * i;
 		add(collisionShit);
 		// }
@@ -150,6 +156,7 @@ class Hills extends MusicBeatState
 		// FlxG.overlap(player, ringSpr, ringSpr.collect);
 
 		FlxG.collide(player, collisionShit);
+		FlxG.collide(player, cameraCollision);
 
 		var infoDisplay:String = '0 "0 "1';
 
