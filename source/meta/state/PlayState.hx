@@ -620,13 +620,9 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		if (FlxG.keys.pressed.SHIFT){
-           boyfriend.playAnim("hey");
+           boyfriend.playAnim("hey", false);
 		}
-		if (FlxG.keys.justReleased.SHIFT)
-		{
-			if (curBeat % 2 == 0)
-				boyfriend.dance();
-		}
+		
 		if (FlxG.keys.justPressed.B){
 			FlxG.stage.application.window.borderless = !FlxG.stage.application.window.borderless;
 		}
@@ -642,8 +638,8 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.T){
 			var windowDad = Lib.application.createWindow({
 				title: "PENE",
-				width: 500,
-				height: 170,
+				width: 900,
+				height: 570,
 				borderless: true,
 				alwaysOnTop: true
 			});
@@ -670,6 +666,8 @@ class PlayState extends MusicBeatState
 
 		if (health > 2)
 			health = 2;
+		if (health < 0)
+			health = 0;
 
 		// dialogue checks
 		if (dialogueBox != null && dialogueBox.alive)
@@ -694,7 +692,7 @@ class PlayState extends MusicBeatState
 		if (!inCutscene)
 		{
 			// pause the game if the game is allowed to pause and enter is pressed
-			if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
+			if (controls.PAUSE && startedCountdown && canPause)
 			{
 				pauseGame();
 			}
