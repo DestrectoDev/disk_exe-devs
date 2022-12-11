@@ -17,9 +17,12 @@ class HealthIcon extends FlxSprite
 
 	public var iconColor:FlxColor = 0xFFFF000;
 
+	var curCharacter:String = "bf";
+
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
+		curCharacter = char;
 		updateIcon(char, isPlayer);
 	}
 
@@ -64,12 +67,18 @@ class HealthIcon extends FlxSprite
 
 	public dynamic function updateAnim(health:Float)
 	{
-		if (health < 20)
+		if (health < 20){
 			animation.curAnim.curFrame = 1;
-		else if (health > 80)
+			if (curCharacter == "susnic")PlayState.dadOpponent.iconColor = 0xFF1f2494;
+		}
+		else if (health > 80){
 			animation.curAnim.curFrame = 2;
-		else
+			if (curCharacter == "susnic")PlayState.dadOpponent.iconColor = 0xFF436dc1;
+		}
+		else{
 			animation.curAnim.curFrame = 0;
+			if (curCharacter == "susnic")PlayState.dadOpponent.iconColor = 0xFF374daa;
+		}
 	}
 
 	override function update(elapsed:Float)

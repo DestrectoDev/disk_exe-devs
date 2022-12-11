@@ -112,7 +112,7 @@ class PauseSubState extends MusicBeatSubState
 			// songText.isMenuItem = true;
 			item.loadGraphic(Paths.image("pause/"+menuItems[i]));
 			// songText.targetY = i;
-			item.x = -475 + (i * 480);
+			item.x = -525 + (i * 480);
 			item.y = 384;
 			item.setGraphicSize(Std.int(item.width / 4));	
 			grpMenuShit.add(item);
