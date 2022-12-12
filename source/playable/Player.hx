@@ -1,9 +1,9 @@
 package playable;
 
 import flixel.*;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import meta.*;
-import flixel.tweens.FlxTween;
 
 class Player extends FlxSprite
 {
@@ -107,14 +107,14 @@ class Player extends FlxSprite
 			}
 			if (right)
 			{
-				velocity.x = (SPEED + (holdSpeed * 2));
+				velocity.x = (SPEED + (holdSpeed));
 				holdSpeed += 8;
 				facing = FlxObject.RIGHT;
 			}
 			else if (left)
 			{
-				velocity.x = -(SPEED - (holdSpeed * 2));
-				holdSpeed -= 8;
+				velocity.x -= -(SPEED - (holdSpeed));
+				holdSpeed += 8;
 				facing = FlxObject.LEFT;
 			}
 			else if (leftR || rightR)

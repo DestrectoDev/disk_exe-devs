@@ -54,6 +54,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
 
 	public var foreground:FlxTypedGroup<FlxBasic>;
 
+	public var shade:FNFSprite; // sus momment
+
 	public function new(curStage)
 	{
 		super();
@@ -68,8 +70,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
 			{
 				case 'spookeez' | 'south' | 'monster':
 					curStage = 'spooky';
-				case 'pico' | 'blammed' | 'philly-nice':
-					curStage = 'philly';
+				// case 'pico' | 'blammed' | 'philly-nice':
+				// 	curStage = 'philly';
 				case 'milf' | 'satin-panties' | 'high':
 					curStage = 'highway';
 				case 'cocoa' | 'eggnog':
@@ -82,6 +84,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
 					curStage = 'schoolEvil';
 				case "melancholyc-tentation" | "hill":
 					curStage = "green_hill";
+				case "pico":
+					curStage = "skeld";
 				default:
 					curStage = 'stage';
 			}
@@ -373,6 +377,19 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				redShade.scale.set(1.3, 1.3);
 				redShade.scrollFactor.set(0.4, 0.4);
 				redShade.color = 0xFFFF7D7D;
+			case "skeld":
+				PlayState.defaultCamZoom = 0.78;
+                curStage = "skeld";
+				
+				var skeld = new FNFSprite(-198.3, -24.6).loadGraphic(Paths.image("stages/" + curStage +"/stageAll"));
+				skeld.scrollFactor.set(0.54, 0.54);
+				skeld.setGraphicSize(Std.int(skeld.width * 2));
+				add(skeld);
+
+				shade = new FNFSprite(-198.3, -24.6).loadGraphic(Paths.image("stages/" + curStage + "/shade"));
+				shade.scrollFactor.set(0.54, 0.54);
+				shade.setGraphicSize(Std.int(skeld.width * 2));
+				
 			default:
 				PlayState.defaultCamZoom = 0.9;
 				curStage = 'stage';
@@ -423,6 +440,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				gfVersion = 'gf-pixel';
 			case "green_hill":
 				gfVersion = "gf-furry";
+			case "skeld":
+				gfVersion = "gf-furry";
 		}
 
 		gfVersion = PlayState.SONG.gfVersion;
@@ -462,6 +481,16 @@ class Stage extends FlxTypedGroup<FlxBasic>
 		// REPOSITIONING PER STAGE
 		switch (curStage)
 		{
+			case "skeld":
+				boyfriend.x = 634;
+				boyfriend.y = 521;
+
+				dad.x = 239;
+				dad.y = 492;
+
+				gf.x = 461;
+				gf.y = 387;
+
 			case "green_hill":
 				boyfriend.x = 802.85;
 				boyfriend.y = 21.4;

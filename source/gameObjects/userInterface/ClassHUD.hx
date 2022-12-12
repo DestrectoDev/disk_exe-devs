@@ -40,6 +40,9 @@ class ClassHUD extends FlxSpriteGroup
 
 	public var healthBarBG:FlxSprite;
 	public var healthBar:FlxBar;
+	
+	public var extraBarBG:FlxSprite;
+	public var extraBar:FlxBar;
 
 	private var SONG = PlayState.SONG;
 
@@ -81,6 +84,21 @@ class ClassHUD extends FlxSpriteGroup
 		healthBar.createFilledBar(dadColor, bfColor);
 		// healthBar
 		add(healthBar);
+
+		extraBarBG = new FlxSprite(0,
+			barY + 15).loadGraphic(Paths.image(ForeverTools.returnSkinAsset('healthBar', PlayState.assetModifier, PlayState.changeableSkin, 'UI')));
+		extraBarBG.screenCenter(X);
+		extraBarBG.scrollFactor.set();
+		extraBarBG.scale.set(0.7, 0.8);
+		add(extraBarBG);
+
+		extraBar = new FlxBar(extraBarBG.x + 14, extraBarBG.y + 14, RIGHT_TO_LEFT, Std.int(extraBarBG.width - 8), Std.int(extraBarBG.height - 8));
+		extraBar.scrollFactor.set();
+		// var dadColor = PlayState.dadOpponent.iconColor;
+		// var bfColor = PlayState.boyfriend.iconColor;
+		extraBar.createFilledBar(FlxColor.RED, FlxColor.GREEN);
+		// healthBar
+		add(extraBar);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
@@ -171,6 +189,8 @@ class ClassHUD extends FlxSpriteGroup
 	{
 		// pain, this is like the 7th attempt
 		healthBar.percent = (PlayState.health * 50);
+		
+		extraBar.percent = (PlayState.extraHealth * 50);
 
 		var iconLerp = 1 - Main.framerateAdjust(0.15);
 		// iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.initialWidth, iconP1.width, iconLerp)));

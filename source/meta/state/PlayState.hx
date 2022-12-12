@@ -99,6 +99,7 @@ class PlayState extends MusicBeatState
 	private var gfSpeed:Int = 1;
 
 	public static var health:Float = 1; // mario
+	public static var extraHealth:Float = 0.7; // mario
 	public static var combo:Int = 0;
 
 	public static var misses:Int = 0;
@@ -275,6 +276,9 @@ class PlayState extends MusicBeatState
 
 		if (curStage == "green_hill")
 			add(stageBuild.redShade);
+		
+		if (curStage == "skeld")
+			add(stageBuild.shade);
 
 		add(stageBuild.foreground);
 
@@ -360,6 +364,8 @@ dadStrums.visible = false;
 		uiHUD.iconP2.alpha = 1;
 		uiHUD.healthBar.alpha = 0.8;
 		uiHUD.healthBarBG.alpha = 0.8;
+		uiHUD.extraBar.alpha = 0.8;
+		uiHUD.extraBarBG.alpha = 0.8;
 		add(uiHUD);
 		uiHUD.cameras = [camHUD];
 		//
@@ -667,6 +673,11 @@ dadStrums.visible = false;
 			health = 2;
 		if (health < 0)
 			health = 0;
+
+		if (extraHealth > 2)
+			extraHealth = 2;
+		if (extraHealth < 0)
+			extraHealth = 0;
 
 		// dialogue checks
 		if (dialogueBox != null && dialogueBox.alive)
@@ -1597,6 +1608,9 @@ dadStrums.visible = false;
 	{
 		// health += 0.012;
 		var healthBase:Float = 0.06;
+		if (health < 0)
+		extraHealth += (healthBase * (ratingMultiplier / 120));
+		else
 		health += (healthBase * (ratingMultiplier / 100));
 	}
 
