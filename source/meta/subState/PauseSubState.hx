@@ -112,15 +112,15 @@ class PauseSubState extends MusicBeatSubState
 			// songText.isMenuItem = true;
 			item.loadGraphic(Paths.image("pause/"+menuItems[i]));
 			// songText.targetY = i;
-			item.x = -525 + (i * 480);
+			item.x = -525 + (i * 460);
 			item.y = 384;
-			item.setGraphicSize(Std.int(item.width / 4));	
+			item.setGraphicSize(Std.int(item.width / 4.5));	
 			grpMenuShit.add(item);
 		}
 
 		box = new FNFSprite(grpMenuShit.members[0].x + (grpMenuShit.members[0].width / 2), 0);
 		box.loadGraphic(Paths.image("pause/red"));
-		box.y = grpMenuShit.members[0].y - (box.height / 2);
+		box.y = grpMenuShit.members[0].y - (box.height / 2) + 190;
 		box.antialiasing = false;
 		box.setGraphicSize(Std.int(box.width / 4));
 		add(box);
@@ -207,11 +207,11 @@ class PauseSubState extends MusicBeatSubState
 		for (item in grpMenuShit.members)
 		{
 			if (curSelected == 2)
-				box.x = item.x * ((curSelected + 1) * 6.75);
+				box.x = 320;
 			else if (curSelected == 1)
-				box.x = item.x * ((curSelected + 1) * 4.45);
+				box.x = -140;
 			else if (curSelected == 0)
-				box.x = item.x * ((curSelected + 1) * 2.51);
+				box.x = -600;
 		}
 		//
 	}
