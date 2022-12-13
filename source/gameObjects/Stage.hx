@@ -66,29 +66,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
 		{
 			// this is because I want to avoid editing the fnf chart type
 			// custom stage stuffs will come with forever charts
-			switch (CoolUtil.spaceToDash(PlayState.SONG.song.toLowerCase()))
-			{
-				case 'spookeez' | 'south' | 'monster':
-					curStage = 'spooky';
-				// case 'pico' | 'blammed' | 'philly-nice':
-				// 	curStage = 'philly';
-				case 'milf' | 'satin-panties' | 'high':
-					curStage = 'highway';
-				case 'cocoa' | 'eggnog':
-					curStage = 'mall';
-				case 'winter-horrorland':
-					curStage = 'mallEvil';
-				case 'senpai' | 'roses':
-					curStage = 'school';
-				case 'thorns':
-					curStage = 'schoolEvil';
-				case "melancholyc-tentation" | "hill":
-					curStage = "green_hill";
-				case "pico":
-					curStage = "skeld";
-				default:
-					curStage = 'stage';
-			}
+
+			curStage = PlayState.SONG.curStage;
 
 			PlayState.curStage = curStage;
 		}

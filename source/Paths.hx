@@ -247,7 +247,10 @@ class Paths
 	{
 		return getPath('data/$key.xml', TEXT, library);
 	}
-
+	static public function module(key:String, ?library:String)
+	{
+		return getPath('$key.hxs', TEXT, library);
+	}
 	inline static public function offsetTxt(key:String, ?library:String)
 	{
 		return getPath('images/characters/$key.txt', TEXT, library);
