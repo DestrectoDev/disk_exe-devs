@@ -6976,7 +6976,7 @@
 		"curStage": "green_hill",
 		"song": "Melancholyc-Tentation",
 		"validScore": true,
-		"stage": "green_hill",
+		"curStage": "green_hill",
 		"arrowSkin": "",
 		"needsVoices": true,
 		"speed": 3,

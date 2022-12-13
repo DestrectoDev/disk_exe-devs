@@ -6237,6 +6237,7 @@
 		"validScore": false,
 		"bpm": 179,
 		"needsVoices": true,
+		"curStage": "green_hill",
 		"song": "Hill"
 	}
 }

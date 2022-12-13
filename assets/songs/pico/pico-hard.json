@@ -5,6 +5,7 @@
         "needsVoices": true,
         "player1": "bffurry",
         "player2": "susnic",
+        "curStage": "philly",
         "speed": 1.6,
         "notes": [
             {
