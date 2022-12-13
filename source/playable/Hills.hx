@@ -64,6 +64,7 @@ class Hills extends MusicBeatState
 		var montass = new FNFSprite(0, -20);
 		montass.loadGraphic(Paths.image("hills/stages/MONTANAS_1"));
 		montass.screenCenter(XY);
+		montass.scale.set(0.4, 0.5);
 		add(montass);
 
 		bg = new FNFSprite(0, -110);
@@ -156,7 +157,7 @@ class Hills extends MusicBeatState
 		// FlxG.overlap(player, ringSpr, ringSpr.collect);
 
 		FlxG.collide(player, collisionShit);
-		FlxG.collide(player, cameraCollision);
+		// FlxG.collide(player, cameraCollision);
 
 		var infoDisplay:String = '0 "0 "1';
 

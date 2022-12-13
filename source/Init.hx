@@ -3,6 +3,8 @@ import flixel.FlxState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.FlxGraphic;
 import flixel.input.keyboard.FlxKey;
+import lime.app.Application;
+import lime.graphics.Image;
 import meta.CoolUtil;
 import meta.Overlay;
 import meta.data.Highscore;
@@ -30,6 +32,8 @@ enum SettingTypes
 **/
 class Init extends FlxState
 {
+	var app = Application.current.window;
+
 	/*
 		Okay so here we'll set custom settings. As opposed to the previous options menu, everything will be handled in here with no hassle.
 		This will read what the second value of the key's array is, and then it will categorise it, telling the game which option to set it to.
@@ -69,6 +73,12 @@ class Init extends FlxState
 			'Whether to display approximately how much memory is being used.',
 			NOT_FORCED
 		],
+		// 'FullScreen' => [
+		// 	true,
+		// 	Checkmark,
+		// 	'Set enable or disable the game screenSize (fullscreen).',
+		// 	NOT_FORCED
+		// ],
 		'FullScreen' => [
 			true,
 			Checkmark,
@@ -239,6 +249,8 @@ class Init extends FlxState
 	{
 		FlxG.save.bind('foreverengine-options');
 		Highscore.load();
+	
+		app.setIcon(Image.fromFile("newIcon.png"));
 
 		loadSettings();
 		loadControls();

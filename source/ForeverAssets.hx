@@ -114,10 +114,18 @@ class ForeverAssets
 	}
 
 	public static function generateNoteSplashes(asset:String, assetModifier:String = 'base', changeableSkin:String = 'default', baseLibrary:String,
-			noteData:Int):NoteSplash
+			noteData:Int, ?noteType:Int):NoteSplash
 	{
 		//
 		var tempSplash:NoteSplash = new NoteSplash(noteData);
+		switch (noteType) {
+		case 2:
+			tempSplash.frames = Paths.getSparrowAtlas("UI/default/base/ringNoteSpr");
+
+			tempSplash.animation.play('anim1');
+			tempSplash.addOffset('anim1', -20, -10);
+			tempSplash.addOffset('anim2', -20, -10);
+		default:
 		switch (assetModifier)
 		{
 			case 'pixel':
@@ -149,8 +157,8 @@ class ForeverAssets
 				tempSplash.animation.play('anim1');
 				tempSplash.addOffset('anim1', -20, -10);
 				tempSplash.addOffset('anim2', -20, -10);
+			}
 		}
-
 		return tempSplash;
 	}
 

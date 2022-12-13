@@ -488,6 +488,8 @@ class Character extends FNFSprite
 
 				loadOffsetFile();
 
+				setGraphicSize(Std.int(width - 5));
+
 				playAnim('idle');
 			case 'bffurry':
 				iconColor = 0xFF549ad5;

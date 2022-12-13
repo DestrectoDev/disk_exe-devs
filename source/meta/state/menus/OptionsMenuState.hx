@@ -365,6 +365,16 @@ class OptionsMenuState extends MusicBeatState
 				thisOption.y += (90 * (i - Math.floor(categoryMap.get(groupName)[0].length / 2)));
 				thisOption.targetY = i;
 				thisOption.disableX = true;
+				/**
+				  Set the letter color	
+				**/
+				if (!lockedMovement)
+				{
+				thisOption.color = 0xFFff4040;
+				}
+				else{
+				thisOption.color = 0xFFFFFFFF;
+				}
 				// hardcoded main so it doesnt have scroll
 				if (groupName != 'main')
 					thisOption.isMenuItem = true;

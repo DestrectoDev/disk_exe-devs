@@ -78,6 +78,8 @@ class OriginalChartingState extends MusicBeatState
 
 	var _song:SwagSong;
 
+	private var lastNote:Note;
+
 	var typingShit:FlxInputText;
 	/*
 	 * WILL BE THE CURRENT / LAST PLACED NOTE
@@ -956,14 +958,10 @@ class OriginalChartingState extends MusicBeatState
 			var daNoteInfo = i[1];
 			var daStrumTime = i[0];
 			var daSus = i[2];
-			var daNoteType = 0;
+			var daType = i[3];
 
-			if (i.length > 2)
-				daNoteType = i[3];
-
-			var note:Note = ForeverAssets.generateArrow(PlayState.assetModifier, daStrumTime, daNoteInfo % 4, daNoteType, 0);
+			var note:Note = ForeverAssets.generateArrow(PlayState.assetModifier, daStrumTime, daNoteInfo % 4, daType, 0);
 			note.sustainLength = daSus;
-			note.noteType = daNoteType;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 			note.updateHitbox();
 			note.x = Math.floor(daNoteInfo * GRID_SIZE);
@@ -972,6 +970,10 @@ class OriginalChartingState extends MusicBeatState
 
 			if (i[1] > 3)
 				note.mustPress = !note.mustPress;
+
+			if (curSelectedNote != null)
+				if (curSelectedNote[0] == note.strumTime)
+					lastNote = note;
 
 			curRenderedNotes.add(note);
 
@@ -1058,14 +1060,25 @@ class OriginalChartingState extends MusicBeatState
 		updateGrid();
 	}
 
-	private function addNote():Void
+	private function addNote(?n:Note):Void
 	{
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
-		var noteType = curNoteType; // define notes as the current type
+		// var noteType = curNoteType; // define notes as the current type
 		var noteSus = 0; // ninja you will NOT get away with this
 
-		_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteType]);
+		var noteType = 0;
+
+		if (FlxG.keys.pressed.ONE)
+			noteType = 1;
+		if (FlxG.keys.pressed.ALT)
+			noteType = 2;
+
+		if (n != null)
+			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.noteType]);
+		else
+			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteType]);
+
 
 		curSelectedNote = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 

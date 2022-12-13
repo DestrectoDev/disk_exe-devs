@@ -99,7 +99,7 @@ class PlayState extends MusicBeatState
 	private var gfSpeed:Int = 1;
 
 	public static var health:Float = 1; // mario
-	public static var extraHealth:Float = 0.7; // mario
+	public static var extraHealth:Float = 2; // mario
 	public static var combo:Int = 0;
 
 	public static var misses:Int = 0;
@@ -170,6 +170,7 @@ class PlayState extends MusicBeatState
 		songScore = 0;
 		combo = 0;
 		health = 1;
+		extraHealth = 2;
 		misses = 0;
 		// sets up the combo object array
 		lastCombo = [];
@@ -361,11 +362,13 @@ dadStrums.visible = false;
 		uiHUD = new ClassHUD();
 		uiHUD.alpha = 0.6;
 		uiHUD.iconP1.alpha = 1;
+		uiHUD.ringIcon.alpha = 1;
 		uiHUD.iconP2.alpha = 1;
 		uiHUD.healthBar.alpha = 0.8;
 		uiHUD.healthBarBG.alpha = 0.8;
 		uiHUD.extraBar.alpha = 0.8;
 		uiHUD.extraBarBG.alpha = 0.8;
+		uiHUD.frontBarBG.alpha = 1;
 		add(uiHUD);
 		uiHUD.cameras = [camHUD];
 		//
@@ -712,7 +715,7 @@ dadStrums.visible = false;
 				if (FlxG.keys.pressed.SHIFT)
 					Main.switchState(this, new ChartingState());
 				else
-					Main.switchState(this, new SwagChartingState());
+					Main.switchState(this, new OriginalChartingState());
 			}
 			// make sure you're not cheating lol
 			if (!isStoryMode)
@@ -850,7 +853,7 @@ dadStrums.visible = false;
 
 			// RESET = Quick Game Over Screen
 
-			if (health <= 0 && startedCountdown)
+			if ((health <= 0 && extraHealth <= 0) && startedCountdown)
 			{
 				paused = true;
 				// startTimer.active = false;
@@ -1124,6 +1127,7 @@ dadStrums.visible = false;
 			// boyfriend.animation.curAnim.curFrame = 2;
 			// }
 			// else
+			
 			characterPlayAnimation(coolNote, character);
 			if (characterStrums.receptors.members[coolNote.noteData] != null)
 				characterStrums.receptors.members[coolNote.noteData].playAnim('confirm', true);
@@ -1158,6 +1162,9 @@ dadStrums.visible = false;
 					popUpScore(foundRating, ratingTiming, characterStrums, coolNote);
 					if (coolNote.childrenNotes.length > 0)
 						Timings.notesHit++;
+					if (coolNote.noteType == 2)
+						extraHealth += 0.025;
+					else
 					healthCall(Timings.judgementsMap.get(foundRating)[3]);
 				}
 				else if (coolNote.isSustainNote)
@@ -1166,6 +1173,9 @@ dadStrums.visible = false;
 					if (coolNote.parentNote != null)
 					{
 						Timings.updateAccuracy(100, true, coolNote.parentNote.childrenNotes.length);
+						if (coolNote.noteType == 2)
+						extraHealth += 0.025;
+						else
 						healthCall(100 / coolNote.parentNote.childrenNotes.length);
 					}
 				}
@@ -1226,7 +1236,10 @@ dadStrums.visible = false;
 		// 	case 3:
 		// 		Lib.application.window.move(45, 0);
 		// }
-
+		if (dadOpponent.animation.curAnim.name.startsWith("sing"))
+		{
+		health -= 0.012;
+		}	
 		character.playAnim(stringArrow, true);
 		character.holdTimer = 0;
 	}
@@ -1498,7 +1511,7 @@ dadStrums.visible = false;
 			numScore.x += 100;
 		}
 	}
-
+	var shitNote:Note;
 	function decreaseCombo(?popMiss:Bool = false)
 	{
 		// painful if statement
@@ -1519,7 +1532,10 @@ dadStrums.visible = false;
 		{
 			// doesnt matter miss ratings dont have timings
 			displayRating("miss", 'late');
-			healthCall(Timings.judgementsMap.get("miss")[3]);
+			if (health <= 0)
+			extraHealth -= 0.09;
+			else
+			healthCall(Timings.judgementsMap.get("miss")[3], shitNote);
 		}
 		popUpCombo();
 
@@ -1604,14 +1620,19 @@ dadStrums.visible = false;
 		}
 	}
 
-	function healthCall(?ratingMultiplier:Float = 0)
+	function healthCall(?ratingMultiplier:Float = 0, ?daNote:Note)
 	{
-		// health += 0.012;
-		var healthBase:Float = 0.06;
-		if (health < 0)
-		extraHealth += (healthBase * (ratingMultiplier / 120));
-		else
+	// health += 0.012;
+     var healthBase:Float = 0.06;
+	//  for (strumline in strumLines)
+	//   {
+	// 	strumline.allNotes.forEachAlive(function(daNote:Note){			
+		// if (Note.isRingNote)
+		// extraHealth += 0.025;
+		// else
 		health += (healthBase * (ratingMultiplier / 100));
+		// });
+	//   }
 	}
 
 	function startSong():Void

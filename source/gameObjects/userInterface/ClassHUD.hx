@@ -39,6 +39,7 @@ class ClassHUD extends FlxSpriteGroup
 	public var autoplaySine:Float = 0;
 
 	public var healthBarBG:FlxSprite;
+	public var frontBarBG:FlxSprite;
 	public var healthBar:FlxBar;
 	
 	public var extraBarBG:FlxSprite;
@@ -48,6 +49,8 @@ class ClassHUD extends FlxSpriteGroup
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
+	
+	public var ringIcon:FlxSprite;
 
 	private var stupidHealth:Float = 0;
 
@@ -67,15 +70,17 @@ class ClassHUD extends FlxSpriteGroup
 
 		
 		// le healthbar setup
-		var barY = FlxG.height * 0.875;
+		var barY = FlxG.height * 0.835;
 		if (Init.trueSettings.get('Downscroll'))
 			barY = 64;
 
 		healthBarBG = new FlxSprite(0,
-			barY).loadGraphic(Paths.image(ForeverTools.returnSkinAsset('healthBar', PlayState.assetModifier, PlayState.changeableSkin, 'UI')));
+			barY).loadGraphic(Paths.image('ui/default/base/healthBar'));
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
+
+	
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8));
 		healthBar.scrollFactor.set();
@@ -86,19 +91,27 @@ class ClassHUD extends FlxSpriteGroup
 		add(healthBar);
 
 		extraBarBG = new FlxSprite(0,
-			barY + 15).loadGraphic(Paths.image(ForeverTools.returnSkinAsset('healthBar', PlayState.assetModifier, PlayState.changeableSkin, 'UI')));
+			barY + 40).loadGraphic(Paths.image('UI/default/base/ringBar'));
 		extraBarBG.screenCenter(X);
 		extraBarBG.scrollFactor.set();
-		extraBarBG.scale.set(0.7, 0.8);
 		add(extraBarBG);
 
-		extraBar = new FlxBar(extraBarBG.x + 14, extraBarBG.y + 14, RIGHT_TO_LEFT, Std.int(extraBarBG.width - 8), Std.int(extraBarBG.height - 8));
+		extraBar = new FlxBar(extraBarBG.x + 4, extraBarBG.y + 4, RIGHT_TO_LEFT, Std.int(extraBarBG.width - 8), Std.int(extraBarBG.height - 8));
 		extraBar.scrollFactor.set();
 		// var dadColor = PlayState.dadOpponent.iconColor;
 		// var bfColor = PlayState.boyfriend.iconColor;
-		extraBar.createFilledBar(FlxColor.RED, FlxColor.GREEN);
+		extraBar.createFilledBar(FlxColor.RED, 0xFFFFFF99);
 		// healthBar
 		add(extraBar);
+
+		frontBarBG = new FlxSprite(0, barY - 52).loadGraphic(Paths.image("UI/default/base/bgBar"));
+		frontBarBG.screenCenter(X);
+		frontBarBG.scrollFactor.set();
+		add(frontBarBG);
+
+		ringIcon = new FlxSprite(0, 0).loadGraphic(Paths.image("UI/default/base/ringIcon"));
+		ringIcon.y = (extraBar.y - (ringIcon.height / 2)) + 12;
+		add(ringIcon);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
@@ -108,10 +121,11 @@ class ClassHUD extends FlxSpriteGroup
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 
-		scoreBar = new FlxText(FlxG.width / 2, Math.floor(healthBarBG.y + 40), 0, scoreDisplay);
+		scoreBar = new FlxText(FlxG.width / 2, Math.floor((Init.trueSettings.get('Downscroll') ? healthBarBG.y + 40 : healthBarBG.y - 40)), 0, scoreDisplay);
 		scoreBar.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
 		scoreBar.setBorderStyle(OUTLINE, FlxColor.BLACK, 1.5);
 		updateScoreText();
+		scoreBar.screenCenter(X);
 		// scoreBar.scrollFactor.set();
 		scoreBar.antialiasing = true;
 		add(scoreBar);
@@ -130,7 +144,7 @@ class ClassHUD extends FlxSpriteGroup
 		centerMark.antialiasing = true;
 		add(centerMark);
 
-		scoreHUD = new FlxSprite(32, (Init.trueSettings.get('Downscroll') ? 479 : 32), Paths.image("UI/default/base/scoreSpr"));
+		scoreHUD = new FlxSprite(37, (Init.trueSettings.get('Downscroll') ? 479 : 32), Paths.image("UI/default/base/scoreSpr"));
 		scoreHUD.antialiasing = false;
 		add(scoreHUD);
 
@@ -144,7 +158,7 @@ class ClassHUD extends FlxSpriteGroup
 			for (i in 0...judgementNameArray.length)
 			{
 				var textAsset:FlxText = new FlxText(15
-					+ (!left ? (FlxG.width - 25) : 25),
+					+ (!left ? (FlxG.width - 45) : 25),
 					(FlxG.height / 2)
 					- (counterTextSize * (judgementNameArray.length / 2))
 					+ (i * counterTextSize), 0, '', counterTextSize);
@@ -197,15 +211,20 @@ class ClassHUD extends FlxSpriteGroup
 		// iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.initialWidth, iconP2.width, iconLerp)));
 
 		// the new way of scaling the icons lmao
-		iconP1.scale.set(FlxMath.lerp(1, iconP1.scale.x, iconLerp), FlxMath.lerp(1, iconP1.scale.y, iconLerp));
-		iconP2.scale.set(FlxMath.lerp(1, iconP2.scale.x, iconLerp), FlxMath.lerp(1, iconP2.scale.y, iconLerp));
+		iconP1.scale.set(FlxMath.lerp(0.85, iconP1.scale.x, iconLerp), FlxMath.lerp(0.8, iconP1.scale.y, iconLerp));
+		iconP2.scale.set(FlxMath.lerp(0.85, iconP2.scale.x, iconLerp), FlxMath.lerp(0.8, iconP2.scale.y, iconLerp));
+		
+		ringIcon.scale.set(FlxMath.lerp(0.75, ringIcon.scale.x, iconLerp), FlxMath.lerp(0.75, ringIcon.scale.y, iconLerp));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
+		
+		ringIcon.updateHitbox();
 
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
+		ringIcon.x = extraBar.x + (extraBar.width * (FlxMath.remapToRange(extraBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
 		iconP1.updateAnim(healthBar.percent);
@@ -214,7 +233,7 @@ class ClassHUD extends FlxSpriteGroup
 		if (autoplayMark.visible)
 		{
 			autoplaySine += 180 * (elapsed / 4);
-			autoplayMark.alpha = 1 - Math.sin((Math.PI * autoplaySine) / 80);
+			autoplayMark.alpha = 0.6 - Math.sin((Math.PI * autoplaySine) / 60);
 		}
 	}
 
@@ -265,11 +284,20 @@ class ClassHUD extends FlxSpriteGroup
 	{
 		if (!Init.trueSettings.get('Reduced Movements'))
 		{
-			iconP1.setGraphicSize(Std.int(iconP1.width + 30));
-			iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+			iconP1.setGraphicSize(Std.int(iconP1.width + 19));
+			iconP2.setGraphicSize(Std.int(iconP2.width + 19));
+			ringIcon.setGraphicSize(Std.int(ringIcon.width + 15));
 
 			iconP1.updateHitbox();
 			iconP2.updateHitbox();
+			ringIcon.updateHitbox();
+
+			if (meta.MusicBeat.MusicBeatState.instance.curBeat % 8 == 0){
+			  flixel.tweens.FlxTween.tween(ringIcon, {angle: 340}, meta.data.Conductor.stepCrochet * 0.003, {ease: FlxEase.circInOut, onComplete: 
+				function(tween:FlxTween){
+				    ringIcon.angle = 0;
+				}});
+			}
 		}
 		//
 	}

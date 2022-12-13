@@ -3,6 +3,7 @@ package meta.subState;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSubState;
+import flixel.tweens.*;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import gameObjects.*;
@@ -92,6 +93,14 @@ class GameOverSubstate extends MusicBeatSubState
 		FlxG.camera.target = null;
 
 		bf.playAnim('firstDeath');
+		bf.animation.finishCallback = function(name)
+		{
+		  for (memb in 0...stageDir.members.length)	
+			FlxTween.tween(stageDir.members[memb], {alpha: 0}, 1.2, {ease: FlxEase.circInOut});
+		  
+			FlxTween.tween(dadOpponent, {alpha: 0}, 1.2, {ease: FlxEase.circInOut});
+			FlxTween.tween(gf, {alpha: 0}, 1.2, {ease: FlxEase.circInOut});
+		}
 
 	}
 
@@ -123,6 +132,7 @@ class GameOverSubstate extends MusicBeatSubState
 
 		// if (FlxG.sound.music.playing)
 		//	Conductor.songPosition = FlxG.sound.music.time;
+
 	}
 
 	override function beatHit()

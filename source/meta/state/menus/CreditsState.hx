@@ -1,7 +1,8 @@
-package meta.state;
+package meta.state.menus;
 
-import meta.MusicBeat.MusicBeatState;
 import flixel.*;
+import meta.MusicBeat.MusicBeatState;
+import meta.state.menus.*;
 
 class CreditsState extends MusicBeatState
 {
@@ -13,5 +14,8 @@ class CreditsState extends MusicBeatState
     override function update(ELAPSED:Float)
         {
             super.update(ELAPSED);
+
+            if (controls.BACK)
+                Main.switchState(this, new SelectState());
         }
 }

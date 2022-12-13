@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="ringNoteSpr-pixel.png">
+	<!-- Created with Adobe Animate version 21.0.0.35450 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="ring note pixel0000" x="0" y="0" width="17" height="16"/>
+	<SubTexture name="ring splash pixel0000" x="17" y="0" width="25" height="23" frameX="-15" frameY="-15" frameWidth="57" frameHeight="53"/>
+	<SubTexture name="ring splash pixel0001" x="42" y="0" width="32" height="31" frameX="-12" frameY="-11" frameWidth="57" frameHeight="53"/>
+	<SubTexture name="ring splash pixel0002" x="74" y="0" width="38" height="35" frameX="-10" frameY="-8" frameWidth="57" frameHeight="53"/>
+	<SubTexture name="ring splash pixel0003" x="0" y="35" width="57" height="53"/>
+	<SubTexture name="ring splash pixel0004" x="57" y="35" width="51" height="46" frameX="-4" frameY="-4" frameWidth="57" frameHeight="53"/>
+</TextureAtlas>

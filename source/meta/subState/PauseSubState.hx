@@ -112,7 +112,7 @@ class PauseSubState extends MusicBeatSubState
 			// songText.isMenuItem = true;
 			item.loadGraphic(Paths.image("pause/"+menuItems[i]));
 			// songText.targetY = i;
-			item.x = -525 + (i * 460);
+			item.x = -525 + (i * 440);
 			item.y = 384;
 			item.setGraphicSize(Std.int(item.width / 4.5));	
 			grpMenuShit.add(item);
@@ -207,11 +207,11 @@ class PauseSubState extends MusicBeatSubState
 		for (item in grpMenuShit.members)
 		{
 			if (curSelected == 2)
-				box.x = 320;
+				box.x = 300;
 			else if (curSelected == 1)
-				box.x = -140;
+				box.x = -120;
 			else if (curSelected == 0)
-				box.x = -600;
+				box.x = -580;
 		}
 		//
 	}
