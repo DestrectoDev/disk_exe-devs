@@ -314,7 +314,7 @@ if (!stopSpam){
             case 0:
                 Main.switchState(this, new FreeplayState());
             case 1:
-				Main.switchState(this, new Hills());
+				Main.switchState(this, new CreditsState());
             case 2:
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
