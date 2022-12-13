@@ -3,3 +3,4 @@ bffurry
 bffurry-dead
 sonic_exe
 susnic
+gf-furry

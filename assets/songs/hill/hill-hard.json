@@ -6233,6 +6233,7 @@
 			}
 		],
 		"gfVersion": "gf-furry",
+		"curStage": "green_hill",
 		"validScore": false,
 		"bpm": 179,
 		"needsVoices": true,

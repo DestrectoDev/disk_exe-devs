@@ -6973,6 +6973,7 @@
 		],
 		"gfVersion": "gf-furry",
 		"splashSkin": "noteSplashes",
+		"curStage": "green_hill",
 		"song": "Melancholyc-Tentation",
 		"validScore": true,
 		"stage": "green_hill",
