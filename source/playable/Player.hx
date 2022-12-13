@@ -1,11 +1,12 @@
 package playable;
 
 import flixel.*;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import meta.*;
-import flixel.tweens.FlxTween;
+import meta.data.dependency.*;
 
-class Player extends FlxSprite
+class Player extends FNFSprite
 {
 	var holdTimer:Float;
 
@@ -17,14 +18,14 @@ class Player extends FlxSprite
 
 	public var debugMode:Bool = false;
 
-	public var animOffsets:Map<String, Array<Dynamic>>;
+	// public var animOffsets:Map<String, Array<Dynamic>>;
 
 	var holdSpeed:Int = 12;
 
 	public function new(X, Y)
 	{
 		super(X, Y);
-		animOffsets = new Map<String, Array<Dynamic>>();
+		// animOffsets = new Map<String, Array<Dynamic>>();
 
 		drag.x = SPEED * 4;
 		drag.y = SPEED * 4;
@@ -84,10 +85,10 @@ class Player extends FlxSprite
 		{
 			if (left || right)
 			{
-				if (holdSpeed >= 222)
+				if (holdSpeed >= 222 || holdSpeed <= 222)
 				playAnim("running");
 				else
-				playAnim("walk", false, false, holdSpeed + 10);
+				playAnim("walk", false, false, holdSpeed + 15);
 			}
 			else
 				playAnim("idle");
@@ -107,13 +108,13 @@ class Player extends FlxSprite
 			}
 			if (right)
 			{
-				velocity.x = (SPEED + (holdSpeed * 2));
+				velocity.x = (SPEED + (holdSpeed));
 				holdSpeed += 8;
 				facing = FlxObject.RIGHT;
 			}
 			else if (left)
 			{
-				velocity.x = -(SPEED - (holdSpeed * 2));
+				velocity.x = -(SPEED - (holdSpeed));
 				holdSpeed -= 8;
 				facing = FlxObject.LEFT;
 			}
@@ -183,28 +184,35 @@ class Player extends FlxSprite
 		}
 	}
 
-	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0)
-	{
-		animation.play(AnimName, Force, Reversed, Frame);
+	// public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0)
+	// {
+	// 	animation.play(AnimName, Force, Reversed, Frame);
 
-		var daOffset = animOffsets.get(AnimName);
-		if (animOffsets.exists(AnimName))
-		{
-			offset.set(daOffset[0], daOffset[1]);
-		}
-		else
-			offset.set(0, 0);
-	}
+	// 	var daOffset = animOffsets.get(AnimName);
+	// 	if (animOffsets.exists(AnimName))
+	// 	{
+	// 		offset.set(daOffset[0], daOffset[1]);
+	// 	}
+	// 	else
+	// 		offset.set(0, 0);
+	// }
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 		moveTails(eventvalue, elapsed);
-		jumpTails(true);
+		jumpTails(true);	
+
+		if (holdSpeed >= 225){
+			holdSpeed = 225;
+		}
+		if (holdSpeed <= 225){
+			holdSpeed = -225;
+		}
 	}
 
-	public function addOffset(name:String, x:Float = 0, y:Float = 0)
-	{
-		animOffsets[name] = [x, y];
-	}
+	// public function addOffset(name:String, x:Float = 0, y:Float = 0)
+	// {
+	// 	animOffsets[name] = [x, y];
+	// }
 }

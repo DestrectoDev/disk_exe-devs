@@ -478,16 +478,17 @@ class Character extends FNFSprite
 				playAnim('idle');
 			case 'susnic':
 				iconColor = 0xFF374daa;
-				tex = Paths.getSparrowAtlas('characters/sonic/Sonic_exe');
+				tex = Paths.getSparrowAtlas('characters/sonic/susnicSheet');
 				frames = tex;
 				animation.addByPrefix('idle', 'idle', 24, false);
 				animation.addByPrefix('singUP', 'up', 24);
 				animation.addByPrefix('singRIGHT', 'right', 24);
 				animation.addByPrefix('singDOWN', 'down', 24);
 				animation.addByPrefix('singLEFT', 'left', 24);
-				animation.addByPrefix('laugh', 'risa', 24);
 
 				loadOffsetFile();
+
+				setGraphicSize(Std.int(width - 5));
 
 				playAnim('idle');
 			case 'bffurry':

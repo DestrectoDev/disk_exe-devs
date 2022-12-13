@@ -48,22 +48,32 @@ class Note extends FNFSprite
 	public var childrenNotes:Array<Note> = [];
 
 	public static var swagWidth:Float = 160 * 0.7;
-
+	
+	public static var isRingNote:Bool = false;
 	// it has come to this.
 	public var endHoldOffset:Float = Math.NEGATIVE_INFINITY;
 
-	public function new(strumTime:Float, noteData:Int, noteAlt:Float, ?prevNote:Note, ?sustainNote:Bool = false)
+	public function new(strumTime:Float, noteData:Int, noteAlt:Float, ?prevNote:Note, ?sustainNote:Bool = false, ?noteType:Int)
 	{
 		super(x, y);
 
 		if (prevNote == null)
 			prevNote = this;
 
+		this.noteType = noteType;
+
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
 
 		// oh okay I know why this exists now
 		y -= 2000;
+
+		switch (noteType){
+			case 2:
+			 isRingNote = true;
+			default:
+			 isRingNote = false;
+		}
 
 		this.strumTime = strumTime;
 		this.noteData = noteData;
@@ -106,9 +116,39 @@ class Note extends FNFSprite
 	**/
 	public static function returnDefaultNote(assetModifier, strumTime, noteData, noteType, noteAlt, ?isSustainNote:Bool = false, ?prevNote:Note = null):Note
 	{
-		var newNote:Note = new Note(strumTime, noteData, noteAlt, prevNote, isSustainNote);
+		var newNote:Note = new Note(strumTime, noteData, noteAlt, prevNote, isSustainNote, noteType);
+
+		switch (noteType)
+		{
+			case 2:
+				isRingNote = true;
+			default:
+				isRingNote = false;
+		}
 
 		// frames originally go here
+		switch (isRingNote){
+		case true:
+			newNote.frames = Paths.getSparrowAtlas("UI/default/base/ringNoteSpr");
+			newNote.animation.addByPrefix('greenScroll', 'rings note');
+			newNote.animation.addByPrefix('redScroll', 'rings note');
+			newNote.animation.addByPrefix('blueScroll', 'rings note');
+			newNote.animation.addByPrefix('purpleScroll', 'rings note');
+
+			newNote.animation.addByPrefix('purpleholdend', 'pruple end hold');
+			newNote.animation.addByPrefix('greenholdend', 'green hold end');
+			newNote.animation.addByPrefix('redholdend', 'red hold end');
+			newNote.animation.addByPrefix('blueholdend', 'blue hold end');
+
+			newNote.animation.addByPrefix('purplehold', 'purple hold piece');
+			newNote.animation.addByPrefix('greenhold', 'green hold piece');
+			newNote.animation.addByPrefix('redhold', 'red hold piece');
+			newNote.animation.addByPrefix('bluehold', 'blue hold piece');
+
+				newNote.setGraphicSize(Std.int(newNote.width * 0.7));
+			newNote.updateHitbox();
+			newNote.antialiasing = true;
+		default:
 		switch (assetModifier)
 		{
 			case 'pixel': // pixel arrows default
@@ -176,13 +216,22 @@ class Note extends FNFSprite
 				// prevNote.setGraphicSize();
 			}
 		}
+		}
 		return newNote;
 	}
 
 	public static function returnQuantNote(assetModifier, strumTime, noteData, noteType, noteAlt, ?isSustainNote:Bool = false, ?prevNote:Note = null):Note
 	{
-		var newNote:Note = new Note(strumTime, noteData, noteAlt, prevNote, isSustainNote);
+		var newNote:Note = new Note(strumTime, noteData, noteAlt, prevNote, isSustainNote, noteType);
 
+		switch (noteType)
+		{
+			case 2:
+				isRingNote = true;
+			default:
+				isRingNote = false;
+				
+		}
 		// actually determine the quant of the note
 		if (newNote.noteQuant == -1)
 		{

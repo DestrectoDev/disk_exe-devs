@@ -26,6 +26,8 @@ class MusicBeatState extends FNFUIState
 	public var curStep:Int = 0;
 	public var curBeat:Int = 0;
 
+	public static var instance:MusicBeatState;
+
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
@@ -34,6 +36,7 @@ class MusicBeatState extends FNFUIState
 	// class create event
 	override function create()
 	{
+		instance = this;
 		// dump
 		Paths.clearStoredMemory();
 		if ((!Std.isOfType(this, meta.state.PlayState)) && (!Std.isOfType(this, meta.state.charting.OriginalChartingState)))

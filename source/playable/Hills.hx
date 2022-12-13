@@ -3,15 +3,15 @@ package playable;
 import flixel.*;
 import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.*;
+import flixel.util.FlxCollision;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.dependency.*;
 import meta.state.*;
-import flixel.util.FlxCollision;
-import flixel.group.FlxGroup;
 import playable.*;
 
 class Hills extends MusicBeatState
@@ -64,6 +64,7 @@ class Hills extends MusicBeatState
 		var montass = new FNFSprite(0, -20);
 		montass.loadGraphic(Paths.image("hills/stages/MONTANAS_1"));
 		montass.screenCenter(XY);
+		montass.scale.set(0.4, 0.5);
 		add(montass);
 
 		bg = new FNFSprite(0, -110);
@@ -122,11 +123,11 @@ class Hills extends MusicBeatState
 
 		// colitionGrp = new FlxTypedGroup<FlxSprite>();
 		// for (i in 0...3){
-		collisionShit = new FlxSprite(-362.75, 579.65).makeGraphic(1950, 935, FlxColor.GREEN);
+		collisionShit = new FlxSprite(-362.75, 565.65).makeGraphic(2250, 935, FlxColor.GREEN);
 		// collisionShit.alpha = 0;
 		// collisionShit.makeGraphic(1950, 935, FlxColor.GREEN);
 		// collisionShit.loadGraphic(Paths.image("hills/stages/stupidColl"));
-		collisionShit.y = 579;
+		collisionShit.y = 559;
 		collisionShit.alpha = 0;
 		collisionShit.immovable = true;
 		// collisionShit.x = -362 * i;
@@ -143,7 +144,7 @@ class Hills extends MusicBeatState
 		add(l);
 		add(frontFire);
 
-		FlxG.camera.follow(player, TOPDOWN, 1);
+		FlxG.camera.follow(player);
         FlxG.camera.zoom = 0.6;
 		// add(new FlxText(0, 0, 0, "Hello World!", 32).screenCenter());
 	}
@@ -156,7 +157,7 @@ class Hills extends MusicBeatState
 		// FlxG.overlap(player, ringSpr, ringSpr.collect);
 
 		FlxG.collide(player, collisionShit);
-		FlxG.collide(player, cameraCollision);
+		// FlxG.collide(player, cameraCollision);
 
 		var infoDisplay:String = '0 "0 "1';
 

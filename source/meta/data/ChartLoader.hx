@@ -68,8 +68,9 @@ class ChartLoader
 						else // if it exists, that is
 							oldNote = null;
 
+						var daType = songNotes[3];
 						// create the new note
-						var swagNote:Note = ForeverAssets.generateArrow(PlayState.assetModifier, daStrumTime, daNoteData, 0, daNoteAlt);
+						var swagNote:Note = ForeverAssets.generateArrow(PlayState.assetModifier, daStrumTime, daNoteData, daType, daNoteAlt);
 						// set note speed
 						swagNote.noteSpeed = songData.speed;
 
@@ -88,7 +89,7 @@ class ChartLoader
 						{
 							oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 							var sustainNote:Note = ForeverAssets.generateArrow(PlayState.assetModifier,
-								daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, 0, daNoteAlt, true, oldNote);
+								daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, daType, daNoteAlt, true, oldNote);
 							sustainNote.scrollFactor.set();
 
 							unspawnNotes.push(sustainNote);

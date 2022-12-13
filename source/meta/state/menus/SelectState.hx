@@ -153,8 +153,9 @@ class SelectState extends MusicBeatState{
 		escapeTxt.visible = false;
         add(escapeTxt);
 
-        button = new FlxSprite(5, -5, Paths.image("menus/base/button"));
+        button = new FlxSprite(-8, -10, Paths.image("menus/base/button"));
         button.updateHitbox();
+        button.scale.set(0.8, 0.8);
         add(button);
 
         app.title = "FNF: The Disks Origin's";

@@ -21,6 +21,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
+import lime.graphics.Image;
 import meta.MusicBeat.MusicBeatState;
 import meta.data.*;
 import meta.data.dependency.Discord;
@@ -57,6 +58,7 @@ class TitleState extends MusicBeatState
 		super.create();
 
 		startIntro();
+
 	}
 
 	var logoBl:FlxSprite;
