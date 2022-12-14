@@ -45,6 +45,7 @@ class SelectState extends MusicBeatState{
 	public static var blockedWeek:Array<Bool> = [true, false, false, false];
 	var app = Application.current.window;
     var escapeTxt:FlxText;
+	public static var firstStart:Bool = true;
     
     override public function create(){
 
@@ -153,12 +154,30 @@ class SelectState extends MusicBeatState{
 		escapeTxt.visible = false;
         add(escapeTxt);
 
-        button = new FlxSprite(-8, -10, Paths.image("menus/base/button"));
-        button.updateHitbox();
-        button.scale.set(0.8, 0.8);
-        add(button);
+        var shade = new FlxSprite(0,0,Paths.image("menus/base/shade"));
+        shade.screenCenter();
+        shade.alpha = 0.8;
+        add(shade);
+	
+    if (firstStart)
+        addStartIntro();
 
         app.title = "FNF: The Disks Origin's";
+    }
+    
+    public function addStartIntro(){
+		var effect = new FlxSprite(0, 0);
+        effect.frames = Paths.getSparrowAtlas("menus/base/static");
+        effect.animation.addByPrefix("loop", "Símbolo 3", 24);
+        effect.animation.play("loop");
+        new FlxTimer().start(0.7, function(tmr:FlxTimer){
+        FlxTween.tween(effect, {alpha: 0}, 0.7,{ease: FlxEase.circInOut, onComplete: function (twn:FlxTween){
+			SelectState.firstStart = false;
+        }});
+        FlxTween.tween(effect.scale, {x: 1.6}, 0.7,{ease: FlxEase.circInOut});
+        FlxTween.tween(effect.scale, {y: 0.6}, 0.7,{ease: FlxEase.circInOut});
+        });
+		add(effect);
     }
 
     var escapeTimes:Int = 0;
@@ -168,7 +187,19 @@ class SelectState extends MusicBeatState{
     override public function update(elapsed:Float){
      super.update(elapsed);
 
-
+		if (FlxG.save.data.autoGame)
+		{
+			new FlxTimer().start(2, function(tmr:FlxTimer)
+			{
+				changeMode(false);
+                changeAlt(0);
+			});
+			new FlxTimer().start(3, function(tmr:FlxTimer)
+			{
+				selectData();
+			});
+		}
+        
      if (escapeTimes > 0){
          escapeTxt.visible = true;
          escapeTxt.text = "times: " + escapeTimes;
@@ -188,16 +219,6 @@ class SelectState extends MusicBeatState{
         
         FlxG.resetState();
     }
-
-    if (FlxG.mouse.overlaps(button)){
-	pressButton(FlxG.mouse.pressed);
-
-    if (FlxG.mouse.justReleased){
-        new FlxTimer().start(1.5, function (tmr:FlxTimer) {
-				#if windows Sys.exit(escapeTimes); #end
-        });
-    }
-}
 
 	 box.visible = !curChangeMode;
 
@@ -252,8 +273,9 @@ if (!stopSpam){
     if (FlxG.keys.justPressed.FIVE)
         Main.switchState(this, new Hills());
 
-     if (controls.BACK)
+     if (controls.BACK) {
         Main.switchState(this, new TitleState());
+     }
      
     }
 
@@ -368,19 +390,4 @@ if (!stopSpam){
 			FlxG.sound.play(Paths.sound('cancelMenu'));
         }
 	}
-	var button:FlxSprite;
-    function pressButton(pressed:Bool = false) {
-        if (pressed){
-            button.scale.set(0.7, 0.7);
-            button.color = FlxColor.GRAY;
-            button.x += 14;
-			button.y += 9;
-			button.updateHitbox(); 
-        }
-        else{
-            button.scale.set(1, 1);
-            button.color = FlxColor.WHITE;
-			button.updateHitbox();
-         }
-    }
 }

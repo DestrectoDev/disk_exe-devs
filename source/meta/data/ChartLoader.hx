@@ -74,6 +74,9 @@ class ChartLoader
 						// set note speed
 						swagNote.noteSpeed = songData.speed;
 
+						if (swagNote.noteType == 2)
+							swagNote.x -= 43;
+
 						// set the note's length (sustain note)
 						swagNote.sustainLength = songNotes[2];
 						swagNote.scrollFactor.set(0, 0);

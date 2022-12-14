@@ -1,14 +1,14 @@
 package meta.state.menus;
 
 
-import flixel.util.FlxColor;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import meta.MusicBeat.MusicBeatState;
-import flixel.addons.display.FlxBackdrop;
 import flixel.*;
+import flixel.addons.display.FlxBackdrop;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import meta.MusicBeat.MusicBeatState;
 
 
 class CreditsState extends MusicBeatState
@@ -26,6 +26,23 @@ class CreditsState extends MusicBeatState
     var colors:Array<Dynamic> = [
         '0xFFFD71D3',
         '0xFF8F0099'
+    ];
+    /**
+        for Later Shit
+    **/
+    var creditData:Array<Dynamic> = [
+      [
+        "treno", // name of crew
+        "0xFFFD71D3", //color
+        "directors", // funciion en el mod
+        "hola pro, me llamo treno y soy pro bro" //info
+      ],
+      [
+        "assman",
+        "0x08EBB2",
+        "programmer",
+        "hola soy assman, primero chupadme la polla tio"
+      ]
     ];
     override function create()
         {
@@ -83,7 +100,12 @@ class CreditsState extends MusicBeatState
             FlxG.camera.follow(camFollow, null, 0.04);
 
             selection();
-            
+       
+            var shade = new FlxSprite(0, 0, Paths.image("menus/base/shade"));
+            shade.screenCenter();
+            shade.alpha = 0.8;
+            add(shade);
+
         }
 
     override function update(ELAPSED:Float)

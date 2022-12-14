@@ -12,8 +12,10 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.tweens.misc.ColorTween;
+import flixel.util.*;
 import flixel.util.FlxColor;
 import gameObjects.userInterface.HealthIcon;
+import lime.app.Application;
 import lime.app.Application;
 import lime.utils.Assets;
 import meta.MusicBeat.MusicBeatState;
@@ -205,7 +207,7 @@ class FreeplayState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-
+		
 		app.title = "FNF: The Disks Origin's - CHOSING [" + songs[curSelected].songName.toUpperCase() + "] -";
 
 
@@ -255,7 +257,19 @@ class FreeplayState extends MusicBeatState
 
 			Main.switchState(this, new PlayState());
 		}
-
+		
+		if (FlxG.save.data.autoGame)
+		{
+			new FlxTimer().start(2, function(tmr:FlxTimer)
+			{
+				changeSelection(2);
+				changeDiff(2);
+			});
+			new FlxTimer().start(3, function(tmr:FlxTimer)
+			{
+				accepted = true;
+			});
+		}	
 		// Adhere the position of all the things (I'm sorry it was just so ugly before I had to fix it Shubs)
 		scoreText.text = "PERSONAL BEST:" + lerpScore;
 		scoreText.x = FlxG.width - scoreText.width - 5;

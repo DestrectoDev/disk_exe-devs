@@ -51,14 +51,17 @@ class TitleState extends MusicBeatState
 
 	var wackyImage:FlxSprite;
 
+	var t:FlxText;
+	
 	override public function create():Void
 	{
 		controls.setKeyboardScheme(None, false);
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 		super.create();
+ 
+		SelectState.firstStart = true;
 
 		startIntro();
-
 	}
 
 	var logoBl:FlxSprite;
@@ -152,6 +155,8 @@ class TitleState extends MusicBeatState
 			initialized = true;
 
 		// credGroup.add(credTextShit);
+		t =  new FlxText(0,0, FlxG.width, "AUTOPLAY DISABLED", 32);
+		add(t);
 	}
 
 	function getIntroTextShit():Array<Array<String>>
@@ -174,6 +179,10 @@ class TitleState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 
+		if (FlxG.keys.justPressed.SIX)
+			FlxG.save.data.autoGame = !FlxG.save.data.autoGame;
+		
+		t.text = "AUTO PLAY " + Std.string(FlxG.save.data.autoGame);
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
@@ -202,6 +211,13 @@ class TitleState extends MusicBeatState
 				pressedEnter = true;
 			#end
 		}
+
+		if (FlxG.save.data.autoGame){
+			new FlxTimer().start(2, function(tmr:FlxTimer){
+				pressedEnter = true;
+			});
+		}
+
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{

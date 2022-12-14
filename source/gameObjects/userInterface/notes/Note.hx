@@ -23,7 +23,7 @@ class Note extends FNFSprite
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
 	public var noteAlt:Float = 0;
-	public var noteType:Float = 0;
+	public var noteType:Int = 0;
 	public var noteString:String = "";
 
 	public var canBeHit:Bool = false;
@@ -145,7 +145,7 @@ class Note extends FNFSprite
 			newNote.animation.addByPrefix('redhold', 'red hold piece');
 			newNote.animation.addByPrefix('bluehold', 'blue hold piece');
 
-				newNote.setGraphicSize(Std.int(newNote.width * 0.7));
+			newNote.setGraphicSize(Std.int(newNote.width * 0.6));
 			newNote.updateHitbox();
 			newNote.antialiasing = true;
 		default:

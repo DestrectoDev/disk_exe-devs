@@ -123,11 +123,13 @@ class OriginalChartingState extends MusicBeatState
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, GRID_SIZE * 16, true, 0xFF8381a3, 0xFFceced8);
 		add(gridBG);
 
-		var gridBlackLine:FlxSprite = new FlxSprite((gridBG.x + gridBG.width / 2) + GRID_SIZE).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
+		var gridBlackLine:FlxSprite = new FlxSprite(((gridBG.x + gridBG.width / 2) + GRID_SIZE) - 20).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
 		add(gridBlackLine);
 
-		waveformSprite = new FlxSprite(GRID_SIZE, 0).makeGraphic(FlxG.width, FlxG.height, 0x00FFFFFF);
-		add(waveformSprite);
+		var eventsGridBlackLine:FlxSprite = new FlxSprite(GRID_SIZE).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
+		add(eventsGridBlackLine);
+
+		
 		
 		curRenderedNotes = new FlxTypedGroup<Note>();
 		curRenderedSustains = new FlxTypedGroup<FlxSprite>();
@@ -212,6 +214,10 @@ class OriginalChartingState extends MusicBeatState
 		addSectionUI();
 		addNoteUI();
 		addEventsUI();
+
+		waveformSprite = new FlxSprite(GRID_SIZE, 0).makeGraphic(FlxG.width, FlxG.height, 0x00FFFFFF);
+		add(waveformSprite);
+		
 		updateWaveform();
 
 		add(curRenderedNotes);
@@ -229,7 +235,7 @@ class OriginalChartingState extends MusicBeatState
 	function addEventsUI()
 	{
 		// eventList.push(n.eventsNote);
-		eventsList = ["changeCharacter", "flashCamera", "fadeCam", "shakeCam", "playAnim"];
+		// eventsList = ["changeCharacter", "flashCamera", "fadeCam", "shakeCam", "playAnim"];
 		eventsDropDown = new FlxUIDropDownMenu(20, 50, FlxUIDropDownMenu.makeStrIdLabelArray(eventsList, true), function(event:String)
 		{
 			Events.curEvents = eventsList[Std.parseInt(event)];
@@ -254,91 +260,6 @@ class OriginalChartingState extends MusicBeatState
 		tab_group_events.add(eventsLabel);
 
 		UI_box.addGroup(tab_group_events);
-	}
-
-
-	var waveformPrinted:Bool = true;
-	var audioBuffers:Array<AudioBuffer> = [null, null];
-
-	function updateWaveform()
-	{
-		#if desktop
-		if (waveformPrinted)
-		{
-			waveformSprite.makeGraphic(Std.int(GRID_SIZE * 8), Std.int(gridBG.height), 0x00FFFFFF);
-			waveformSprite.pixels.fillRect(new Rectangle(0, 0, gridBG.width, gridBG.height), 0x00FFFFFF);
-		}
-		waveformPrinted = false;
-
-		var checkForVoices:Int = 1;
-		if (waveformUseInstrumental.checked)
-			checkForVoices = 0;
-
-		if (!waveformEnabled.checked || audioBuffers[checkForVoices] == null)
-		{
-			// trace('Epic fail on the waveform lol');
-			return;
-		}
-
-		var sampleMult:Float = audioBuffers[checkForVoices].sampleRate / 44100;
-		var index:Int = Std.int(sectionStartTime() * 44.0875 * sampleMult);
-		var drawIndex:Int = 0;
-
-		var steps:Int = _song.notes[curSection].lengthInSteps;
-		if (Math.isNaN(steps) || steps < 1)
-			steps = 16;
-		var samplesPerRow:Int = Std.int(((Conductor.stepCrochet * steps * 1.1 * sampleMult) / 16) / 0.5);
-		if (samplesPerRow < 1)
-			samplesPerRow = 1;
-		var waveBytes:Bytes = audioBuffers[checkForVoices].data.toBytes();
-
-		var min:Float = 0;
-		var max:Float = 0;
-		while (index < (waveBytes.length - 1))
-		{
-			var byte:Int = waveBytes.getUInt16(index * 4);
-
-			if (byte > 65535 / 2)
-				byte -= 65535;
-
-			var sample:Float = (byte / 65535);
-
-			if (sample > 0)
-			{
-				if (sample > max)
-					max = sample;
-			}
-			else if (sample < 0)
-			{
-				if (sample < min)
-					min = sample;
-			}
-
-			if ((index % samplesPerRow) == 0)
-			{
-				// trace("min: " + min + ", max: " + max);
-
-				/*if (drawIndex > gridBG.height)
-					{
-						drawIndex = 0;
-				}*/
-
-				var pixelsMin:Float = Math.abs(min * (GRID_SIZE * 8));
-				var pixelsMax:Float = max * (GRID_SIZE * 8);
-				waveformSprite.pixels.fillRect(new Rectangle(Std.int((GRID_SIZE * 4) - pixelsMin), drawIndex, pixelsMin + pixelsMax, 1), FlxColor.BLUE);
-				drawIndex++;
-
-				min = 0;
-				max = 0;
-
-				if (drawIndex > gridBG.height)
-					break;
-			}
-
-			index++;
-		}
-		waveformPrinted = true;
-		#end
 	}
 
 	function addHelperUI() {
@@ -406,7 +327,89 @@ class OriginalChartingState extends MusicBeatState
 		UI_box.addGroup(tab_group_song);
 		UI_box.scrollFactor.set();
 	}
+	var waveformPrinted:Bool = true;
+	var audioBuffers:Array<AudioBuffer> = [null, null];
 
+	function updateWaveform()
+	{
+		#if desktop
+		if (waveformPrinted)
+		{
+			waveformSprite.makeGraphic(Std.int(GRID_SIZE * 8), Std.int(gridBG.height), 0x00FFFFFF);
+			waveformSprite.pixels.fillRect(new Rectangle(0, 0, gridBG.width, gridBG.height), 0x00FFFFFF);
+		}
+		waveformPrinted = false;
+
+		var checkForVoices:Int = 1;
+		if (waveformUseInstrumental.checked)
+			checkForVoices = 0;
+
+		if (!waveformEnabled.checked || audioBuffers[checkForVoices] == null)
+		{
+			trace('Epic fail on the waveform lol');
+			return;
+		}
+
+		var sampleMult:Float = audioBuffers[checkForVoices].sampleRate / 44100;
+		var index:Int = Std.int(sectionStartTime() * 44.0875 * sampleMult);
+		var drawIndex:Int = 0;
+
+		var steps:Int = _song.notes[curSection].lengthInSteps;
+		if (Math.isNaN(steps) || steps < 1)
+			steps = 16;
+		var samplesPerRow:Int = Std.int(((Conductor.stepCrochet * steps * 1.1 * sampleMult) / 16) / 0.5);
+		if (samplesPerRow < 1)
+			samplesPerRow = 1;
+		var waveBytes:Bytes = audioBuffers[checkForVoices].data.toBytes();
+
+		var min:Float = 0;
+		var max:Float = 0;
+		while (index < (waveBytes.length - 1))
+		{
+			var byte:Int = waveBytes.getUInt16(index * 4);
+
+			if (byte > 65535 / 2)
+				byte -= 65535;
+
+			var sample:Float = (byte / 65535);
+
+			if (sample > 0)
+			{
+				if (sample > max)
+					max = sample;
+			}
+			else if (sample < 0)
+			{
+				if (sample < min)
+					min = sample;
+			}
+
+			if ((index % samplesPerRow) == 0)
+			{
+				// trace("min: " + min + ", max: " + max);
+
+				/*if (drawIndex > gridBG.height)
+					{
+						drawIndex = 0;
+				}*/
+
+				var pixelsMin:Float = Math.abs(min * (GRID_SIZE * 8));
+				var pixelsMax:Float = max * (GRID_SIZE * 8);
+				waveformSprite.pixels.fillRect(new Rectangle(Std.int((GRID_SIZE * 4) - pixelsMin), drawIndex, pixelsMin + pixelsMax, 1), FlxColor.BLUE);
+				drawIndex++;
+
+				min = 0;
+				max = 0;
+
+				if (drawIndex > gridBG.height)
+					break;
+			}
+
+			index++;
+		}
+		waveformPrinted = true;
+		#end
+	}
 	function addSongUI():Void
 	{
 		var UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
@@ -459,7 +462,6 @@ class OriginalChartingState extends MusicBeatState
 		var player2DropDown = new FlxUIDropDownMenu(140, 130, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player2 = characters[Std.parseInt(character)];
-			// updateHeads();
 		});
 		player2DropDown.selectedLabel = _song.player2;
 		var player2Label = new FlxText(140, 110, 64, 'Opponent:');
@@ -1041,7 +1043,7 @@ class OriginalChartingState extends MusicBeatState
 
 		updateGrid();
 		updateSectionUI();
-		
+		updateWaveform();
 	}
 
 	function changeSection(sec:Int = 0, ?updateMusic:Bool = true):Void
@@ -1102,21 +1104,19 @@ class OriginalChartingState extends MusicBeatState
 		check_altAnim.checked = sec.altAnim;
 		check_changeBPM.checked = sec.changeBPM;
 		stepperSectionBPM.value = sec.bpm;
-
-		updateHeads();
 	}
 
 	function updateHeads():Void
 	{
-		if (!_song.notes[curSection].mustHitSection)
+		if (check_mustHitSection.checked)
 		{
-			leftIcon.setPosition(gridBG.width / 2, -100);
-			rightIcon.setPosition(0, -100);
+			leftIcon.animation.play(_song.player1);
+			rightIcon.animation.play(_song.player2);
 		}
 		else
 		{
-			leftIcon.setPosition(0, -100);
-			rightIcon.setPosition(gridBG.width / 2, -100);
+			leftIcon.animation.play(_song.player2);
+			rightIcon.animation.play(_song.player1);
 		}
 	}
 
@@ -1128,12 +1128,10 @@ class OriginalChartingState extends MusicBeatState
 
 	function updateGrid():Void
 	{
-		#if desktop
 		if (waveformEnabled != null)
 		{
 			updateWaveform();
 		}
-		#end
 		while (curRenderedNotes.members.length > 0)
 		{
 			curRenderedNotes.remove(curRenderedNotes.members[0], true);
@@ -1215,8 +1213,8 @@ class OriginalChartingState extends MusicBeatState
 			bpm: _song.bpm,
 			changeBPM: false,
 			mustHitSection: true,
+			gfSection: false,
 			sectionNotes: [],
-			events: [],
 			typeOfSection: 0,
 			altAnim: false
 		};

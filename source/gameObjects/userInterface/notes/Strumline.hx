@@ -135,6 +135,8 @@ class Strumline extends FlxTypedGroup<FlxBasic>
 	public var playState:PlayState;
 	public var displayJudgements:Bool = false;
 
+	public var daType:Int = 0;
+
 	public function new(x:Float = 0, playState:PlayState, ?character:Character, ?displayJudgements:Bool = true, ?autoplay:Bool = true,
 			?noteSplashes:Bool = false, ?keyAmount:Int = 4, ?downscroll:Bool = false, ?parent:Strumline)
 	{
@@ -172,7 +174,8 @@ class Strumline extends FlxTypedGroup<FlxBasic>
 
 			if (noteSplashes)
 			{
-				var noteSplash:NoteSplash = ForeverAssets.generateNoteSplashes('noteSplashes', PlayState.assetModifier, PlayState.changeableSkin, 'UI', i);
+				var noteSplash:NoteSplash = ForeverAssets.generateNoteSplashes('noteSplashes', PlayState.assetModifier, PlayState.changeableSkin, 'UI', i,
+					daType);
 				splashNotes.add(noteSplash);
 			}
 		}
@@ -190,6 +193,7 @@ class Strumline extends FlxTypedGroup<FlxBasic>
 	public function createSplash(coolNote:Note)
 	{
 		// play animation in existing notesplashes
+		daType = coolNote.noteType;
 		var noteSplashRandom:String = (Std.string((FlxG.random.int(0, 1) + 1)));
 		splashNotes.members[coolNote.noteData].playAnim('anim' + noteSplashRandom);
 	}
@@ -197,6 +201,7 @@ class Strumline extends FlxTypedGroup<FlxBasic>
 	public function push(newNote:Note)
 	{
 		//
+		daType = newNote.noteType;
 		var chosenGroup = (newNote.isSustainNote ? holdsGroup : notesGroup);
 		chosenGroup.add(newNote);
 		allNotes.add(newNote);

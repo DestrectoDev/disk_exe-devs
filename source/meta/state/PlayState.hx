@@ -733,7 +733,7 @@ dadStrums.visible = false;
 					Main.switchState(this, new meta.state.menus.AnimationDebug(SONG.gfVersion));
 				}
 
-				if ((FlxG.keys.justPressed.SIX))
+				if ((FlxG.keys.justPressed.SIX) || (FlxG.save.data.autoGame))
 				{
 					boyfriendStrums.autoplay = !boyfriendStrums.autoplay;
 					uiHUD.autoplayMark.visible = boyfriendStrums.autoplay;
@@ -1238,7 +1238,7 @@ dadStrums.visible = false;
 		// }
 		if (dadOpponent.animation.curAnim.name.startsWith("sing"))
 		{
-		health -= 0.012;
+			health -= 0.1;
 		}	
 		character.playAnim(stringArrow, true);
 		character.holdTimer = 0;
@@ -2076,7 +2076,7 @@ dadStrums.visible = false;
 
 			var startCircle = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/circleplaceholder'));
 			startCircle.cameras = [extraHUD];
-			// startCircle.screenCenter();
+			startCircle.screenCenter();
 			var song_ = SONG.song.toLowerCase();
 
 			switch (song_){
@@ -2093,14 +2093,14 @@ dadStrums.visible = false;
 
 			var startText = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/' + SONG.song.toUpperCase() + "Txt"));
 			startText.cameras = [extraHUD];
-			// startText.screenCenter();
+			startText.screenCenter();
 			startText.setGraphicSize(shit);
-			// startText.x = 700;
+			startText.x = 700;
 			add(startText);
 
 			var assText = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/act1'));
 			assText.cameras = [extraHUD];
-			// assText.screenCenter();
+			assText.screenCenter();
 			assText.setGraphicSize(shit);
 
 			if (SONG.song.toLowerCase() == "hill")
@@ -2115,9 +2115,9 @@ dadStrums.visible = false;
 			}
 			new FlxTimer().start(0.6, function(tmr:FlxTimer)
 			{
-				FlxTween.tween(startCircle, {x: 54}, 0.2);
-				FlxTween.tween(startText, {x: 23}, 0.5);
-				FlxTween.tween(assText, {x: 67}, 0.5);
+				FlxTween.tween(startCircle, {x: 0}, 0.2);
+				FlxTween.tween(startText, {x: 0}, 0.5);
+				FlxTween.tween(assText, {x: 0}, 0.5);
 			});
 
 			new FlxTimer().start(1.9, function(tmr:FlxTimer)

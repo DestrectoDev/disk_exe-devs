@@ -488,7 +488,7 @@ class Character extends FNFSprite
 
 				loadOffsetFile();
 
-				setGraphicSize(Std.int(width - 5));
+				setGraphicSize(Std.int(width / 2));
 
 				playAnim('idle');
 			case 'bffurry':

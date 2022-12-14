@@ -407,22 +407,6 @@ class Stage extends FlxTypedGroup<FlxBasic>
 	{
 		var gfVersion:String = 'gf';
 
-		switch (curStage)
-		{
-			case 'highway':
-				gfVersion = 'gf-car';
-			case 'mall' | 'mallEvil':
-				gfVersion = 'gf-christmas';
-			case 'school':
-				gfVersion = 'gf-pixel';
-			case 'schoolEvil':
-				gfVersion = 'gf-pixel';
-			case "green_hill":
-				gfVersion = "gf-furry";
-			case "skeld":
-				gfVersion = "gf-furry";
-		}
-
 		gfVersion = PlayState.SONG.gfVersion;
 
 		return gfVersion;
