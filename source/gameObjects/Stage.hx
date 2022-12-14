@@ -357,7 +357,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				redShade.scrollFactor.set(0.4, 0.4);
 				redShade.color = 0xFFFF7D7D;
 			case "skeld":
-				PlayState.defaultCamZoom = 0.78;
+				PlayState.defaultCamZoom = 0.75;
                 curStage = "skeld";
 				
 				var skeld = new FNFSprite(-198.3, -24.6).loadGraphic(Paths.image("stages/" + curStage +"/stageAll"));
@@ -365,9 +365,9 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				skeld.setGraphicSize(Std.int(skeld.width * 2));
 				add(skeld);
 
-				shade = new FNFSprite(-198.3, -24.6).loadGraphic(Paths.image("stages/" + curStage + "/shade"));
+				shade = new FNFSprite(-198.3, -94.6).loadGraphic(Paths.image("stages/" + curStage + "/shade"));
 				shade.scrollFactor.set(0.54, 0.54);
-				shade.setGraphicSize(Std.int(skeld.width * 2));
+				shade.setGraphicSize(Std.int(skeld.width * 1.5));
 				
 			default:
 				PlayState.defaultCamZoom = 0.9;
@@ -446,13 +446,13 @@ class Stage extends FlxTypedGroup<FlxBasic>
 		{
 			case "skeld":
 				boyfriend.x = 634;
-				boyfriend.y = 521;
+				boyfriend.y = 501;
 
-				dad.x = 239;
-				dad.y = 492;
+				dad.x = -239;
+				dad.y = 472;
 
-				gf.x = 461;
-				gf.y = 387;
+				gf.x = 318;
+				gf.y = 467;
 
 			case "green_hill":
 				boyfriend.x = 802.85;

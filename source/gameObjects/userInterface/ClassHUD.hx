@@ -62,6 +62,7 @@ class ClassHUD extends FlxSpriteGroup
 
 	public var scoreHUD:FlxSprite;
 
+	var infoTxt:FlxText;
 	// eep
 	public function new()
 	{
@@ -147,7 +148,11 @@ class ClassHUD extends FlxSpriteGroup
 		scoreHUD = new FlxSprite(37, (Init.trueSettings.get('Downscroll') ? 479 : 32), Paths.image("UI/default/base/scoreSpr"));
 		scoreHUD.antialiasing = false;
 		add(scoreHUD);
-
+		
+		infoTxt = new FlxText(scoreHUD.x - 90, scoreHUD.y + 10, FlxG.width, "pene", 32);
+		infoTxt.setFormat(Paths.font("sonic-hud-font.ttf"), 52, FlxColor.WHITE, CENTER, OUTLINE, 0xff1a3668);
+		infoTxt.borderSize = 3.43;
+		add(infoTxt);
 		// counter
 		if (Init.trueSettings.get('Counter') != 'None')
 		{
@@ -199,8 +204,17 @@ class ClassHUD extends FlxSpriteGroup
 
 	var left = (Init.trueSettings.get('Counter') == 'Left');
 
+	public var timeDir:String = "0:00";
+
+	public var rings:Int = 0;
+
+	var importSongScore = PlayState.songScore;
+	
 	override public function update(elapsed:Float)
 	{
+		infoTxt.text = ': $importSongScore' + '\n\n: $timeDir' + '\n\n: $rings';
+		infoTxt.x = scoreHUD.x + 270 - (infoTxt.width / 2);
+
 		// pain, this is like the 7th attempt
 		healthBar.percent = (PlayState.health * 50);
 		
@@ -239,6 +253,10 @@ class ClassHUD extends FlxSpriteGroup
 
 	private final divider:String = " • ";
 
+	public function updateScoreSpr(importSongScore:Int, timeDir:String = '0"0"0', rings:Int = 0){
+		infoTxt.text = ': $importSongScore' + '\n\n: $timeDir' + '\n\n: $rings';
+		infoTxt.x = scoreHUD.x + 270 - (infoTxt.width / 2);
+	}
 	public function updateScoreText()
 	{
 		var importSongScore = PlayState.songScore;

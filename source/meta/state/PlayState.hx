@@ -21,6 +21,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
+import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import gameObjects.*;
 import gameObjects.userInterface.*;
@@ -163,6 +164,12 @@ class PlayState extends MusicBeatState
 	public static var lastCombo:Array<FlxSprite>;
 
 	var app = Application.current.window;
+
+	public var timeDir:String = "0:00";
+
+	public var rings:Int = 0;
+
+	var importSongScore = PlayState.songScore;
 
 	function resetStatics()
 	{
@@ -619,8 +626,9 @@ dadStrums.visible = false;
 		app.title = "onic.exeS";
 		case 10:
 		app.title = "Sonic.exe";
+		}
 	}
-}
+	var songPercent:Float = 0;
 
 	override public function update(elapsed:Float)
 	{
@@ -671,6 +679,8 @@ dadStrums.visible = false;
 		if (FlxG.keys.justPressed.P){
           jeje();
 		}
+
+		uiHUD.updateScoreSpr(songScore, timeDir, rings);
 
 		if (health > 2)
 			health = 2;
@@ -769,8 +779,23 @@ dadStrums.visible = false;
 						// Conductor.songPosition += FlxG.elapsed * 1000;
 						// trace('MISSED FRAME');
 					}
-				}
 
+					var curTime:Float = Conductor.songPosition;
+					if (curTime < 0)
+						curTime = 0;
+					
+					songPercent = (curTime / songLength);
+
+					var songCalc:Float = (songLength - curTime);
+					// if (ClientPrefs.timeBarType == 'Time Elapsed')
+					// 	songCalc = curTime;
+
+					var secondsTotal:Int = Math.floor(songCalc / 1000);
+					if (secondsTotal < 0)
+						secondsTotal = 0;
+
+					timeDir = StringTools.replace(FlxStringUtil.formatTime(secondsTotal, false), ":", '"');
+				}
 				// Conductor.lastSongPos = FlxG.sound.music.time;
 				// song shit for testing lols
 			}
@@ -1163,7 +1188,10 @@ dadStrums.visible = false;
 					if (coolNote.childrenNotes.length > 0)
 						Timings.notesHit++;
 					if (coolNote.noteType == 2)
+					{
 						extraHealth += 0.025;
+						uiHUD.rings++;
+					}
 					else
 					healthCall(Timings.judgementsMap.get(foundRating)[3]);
 				}
@@ -1173,8 +1201,10 @@ dadStrums.visible = false;
 					if (coolNote.parentNote != null)
 					{
 						Timings.updateAccuracy(100, true, coolNote.parentNote.childrenNotes.length);
-						if (coolNote.noteType == 2)
+						if (coolNote.noteType == 2){
 						extraHealth += 0.025;
+                        uiHUD.rings++;
+						}
 						else
 						healthCall(100 / coolNote.parentNote.childrenNotes.length);
 					}
@@ -1238,7 +1268,7 @@ dadStrums.visible = false;
 		// }
 		if (dadOpponent.animation.curAnim.name.startsWith("sing"))
 		{
-			health -= 0.1;
+			health -= 0.032;
 		}	
 		character.playAnim(stringArrow, true);
 		character.holdTimer = 0;
@@ -1533,7 +1563,10 @@ dadStrums.visible = false;
 			// doesnt matter miss ratings dont have timings
 			displayRating("miss", 'late');
 			if (health <= 0)
-			extraHealth -= 0.09;
+			{
+				extraHealth += 0.055;
+				uiHUD.rings--;
+			}
 			else
 			healthCall(Timings.judgementsMap.get("miss")[3], shitNote);
 		}

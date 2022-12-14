@@ -154,12 +154,15 @@ class OriginalChartingState extends MusicBeatState
 		  validScore: false
 		  }
 		}
-
+		
+		waveformSprite = new FlxSprite(GRID_SIZE, 0).makeGraphic(FlxG.width, FlxG.height, 0x00FFFFFF);
+		add(waveformSprite);
+		
 		leftIcon = new HealthIcon(_song.player1);
 		rightIcon = new HealthIcon(_song.player2);
 		leftIcon.scrollFactor.set(1, 1);
 		rightIcon.scrollFactor.set(1, 1);
-
+		
 		leftIcon.setGraphicSize(0, 45);
 		rightIcon.setGraphicSize(0, 45);
 
@@ -215,9 +218,6 @@ class OriginalChartingState extends MusicBeatState
 		addNoteUI();
 		addEventsUI();
 
-		waveformSprite = new FlxSprite(GRID_SIZE, 0).makeGraphic(FlxG.width, FlxG.height, 0x00FFFFFF);
-		add(waveformSprite);
-		
 		updateWaveform();
 
 		add(curRenderedNotes);
@@ -802,6 +802,11 @@ class OriginalChartingState extends MusicBeatState
 
 			changeSection(curSection + 1, false);
 		}
+		else if (strumLine.y < -10)
+		{
+			changeSection(curSection - 1, false);
+		}
+
 
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
@@ -850,6 +855,9 @@ class OriginalChartingState extends MusicBeatState
 			else
 				dummyArrow.y = Math.floor(FlxG.mouse.y / GRID_SIZE) * GRID_SIZE;
 		}
+		
+		if (FlxG.sound.music.time < 0 || curStep < 0)
+			FlxG.sound.music.time = 0;
 
 		if (FlxG.keys.justPressed.ENTER)
 		{

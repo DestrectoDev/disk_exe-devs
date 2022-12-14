@@ -105,7 +105,6 @@ class CreditsState extends MusicBeatState
             shade.screenCenter();
             shade.alpha = 0.8;
             add(shade);
-
         }
 
     override function update(ELAPSED:Float)

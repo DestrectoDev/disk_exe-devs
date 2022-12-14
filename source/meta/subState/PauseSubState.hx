@@ -207,11 +207,11 @@ class PauseSubState extends MusicBeatSubState
 		for (item in grpMenuShit.members)
 		{
 			if (curSelected == 2)
-				box.x = 307;
+				box.x = 322;
 			else if (curSelected == 1)
 				box.x = -125;
 			else if (curSelected == 0)
-				box.x = -595;
+				box.x = -575;
 		}
 		//
 	}
