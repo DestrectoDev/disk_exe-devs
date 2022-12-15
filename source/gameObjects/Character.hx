@@ -467,10 +467,10 @@ class Character extends FNFSprite
 				tex = Paths.getSparrowAtlas('characters/sonic/Sonic_exe');
 				frames = tex;
 				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'up', 24);
-				animation.addByPrefix('singRIGHT', 'right', 24);
-				animation.addByPrefix('singDOWN', 'down', 24);
-				animation.addByPrefix('singLEFT', 'left', 24);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
 				animation.addByPrefix('laugh', 'risa', 24);
 
 				loadOffsetFile();

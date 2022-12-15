@@ -174,8 +174,8 @@ class SelectState extends MusicBeatState{
         FlxTween.tween(effect, {alpha: 0}, 0.7,{ease: FlxEase.circInOut, onComplete: function (twn:FlxTween){
 			SelectState.firstStart = false;
         }});
-        FlxTween.tween(effect.scale, {x: 1.6}, 0.7,{ease: FlxEase.circInOut});
-        FlxTween.tween(effect.scale, {y: 0.6}, 0.7,{ease: FlxEase.circInOut});
+        FlxTween.tween(effect.scale, {x: 2}, 0.7,{ease: FlxEase.circInOut});
+        FlxTween.tween(effect.scale, {y: 0.2}, 0.7,{ease: FlxEase.circInOut});
         });
 		add(effect);
     }

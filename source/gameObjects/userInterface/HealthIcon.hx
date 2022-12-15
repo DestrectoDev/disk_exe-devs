@@ -84,6 +84,15 @@ class HealthIcon extends FlxSprite
 		}
 	}
 
+	public function setIconBump(curBeat:Int, iconLerp:Float = 0) {
+	 if (curBeat % 2 == 0 || curBeat % 2 == 1)
+		setGraphicSize(Std.int(width + 19));
+		
+	 	updateHitbox();
+
+		scale.set(flixel.math.FlxMath.lerp(0.85, scale.x, iconLerp), flixel.math.FlxMath.lerp(0.8, scale.y, iconLerp));
+	}
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);

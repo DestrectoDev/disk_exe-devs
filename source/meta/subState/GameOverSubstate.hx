@@ -73,11 +73,6 @@ class GameOverSubstate extends MusicBeatSubState
 		if (PlayState.curStage == "green_hill")
 			add(stageDir.redShade);
 
-
-		if (PlayState.curStage == "green_hill")
-			add(stageDir.redShade);
-
-
 		PlayState.boyfriend.destroy();
 
 		stageDir.repositionPlayers(PlayState.curStage, bf, dadOpponent, gf);
@@ -96,10 +91,12 @@ class GameOverSubstate extends MusicBeatSubState
 		bf.animation.finishCallback = function(name)
 		{
 		  for (memb in 0...stageDir.members.length)	
-			FlxTween.tween(stageDir.members[memb], {alpha: 0}, 1.2, {ease: FlxEase.circInOut});
+			FlxTween.tween(stageDir.members[memb], {alpha: 0}, 0.8, {ease: FlxEase.circInOut});
 		  
-			FlxTween.tween(dadOpponent, {alpha: 0}, 1.2, {ease: FlxEase.circInOut});
-			FlxTween.tween(gf, {alpha: 0}, 1.2, {ease: FlxEase.circInOut});
+			FlxTween.tween(stageDir.redShade, {alpha: 0}, 0.8, {ease: FlxEase.circInOut});
+		  
+			FlxTween.tween(dadOpponent, {alpha: 0}, 0.8, {ease: FlxEase.circInOut});
+			FlxTween.tween(gf, {alpha: 0}, 0.8, {ease: FlxEase.circInOut});
 		}
 
 	}

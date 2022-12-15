@@ -16,7 +16,14 @@ class CreditsState extends MusicBeatState
     var someShit:Array<SHIT> = [];
     var curCred:Int = 0;
     var textCred:FlxText;
-    var credshit:Array<String> = ['directors', 'programers'];
+	var credshit:Array<String> = [
+		'directors',
+		'programers',
+		"artist's & animators",
+		"artist's & animators - 2",
+		"artist's & animators - PAPUS PRO"
+        // 'composers'
+        ];
     var credGrp:FlxTypedGroup<FlxSprite>;
     var camFollow:FlxObject;
     var backGround:FlxBackdrop;
@@ -25,7 +32,10 @@ class CreditsState extends MusicBeatState
     var colorTween:FlxTween;
     var colors:Array<Dynamic> = [
         '0xFFFD71D3',
-        '0xFF8F0099'
+	    '0xFF8F0099',
+	    '0xFF21c45d',
+	    '0xFF21c45d',
+	    '0xFF21c45d'
     ];
     /**
         for Later Shit
@@ -44,6 +54,9 @@ class CreditsState extends MusicBeatState
         "hola soy assman, primero chupadme la polla tio"
       ]
     ];
+
+	var sprite:FlxSprite;
+
     override function create()
         {
             super.create();
@@ -53,13 +66,13 @@ class CreditsState extends MusicBeatState
             someShit.push(new SHIT(FlxColor.fromString(colors[i])));
                 }
 
-    backGround = new FlxBackdrop(Paths.image("menus/base/back_menu_white"), 0, 0, true, true, 0, 0);
+        backGround = new FlxBackdrop(Paths.image("menus/base/back_menu_white"), 0, 0, true, true, 0, 0);
 		backGround.velocity.x = -310;
 		backGround.screenCenter(Y);
 		backGround.antialiasing = true;
 		add(backGround);
 
-        textCred = new FlxText(20, 20, '', 74);
+        textCred = new FlxText(350, 620, '', 74);
         textCred.setFormat(Paths.font('Sonic Advanced 2.ttf'), 74);
         textCred.updateHitbox();
         textCred.scrollFactor.set();
@@ -73,28 +86,32 @@ class CreditsState extends MusicBeatState
 
         for (i in 0...credshit.length)
             {
-                var sprite = new FlxSprite(6000 + (i * 2000), 0);
+                sprite = new FlxSprite(6000 + (i * 4000), 0);
                 sprite.ID = i;
-                sprite.scale.set(0.3, 0.3);
+                
+    			sprite.scale.set(0.25, 0.25);
+                sprite.x = 6000 + (i * 4000);
+
                 sprite.updateHitbox();
                 sprite.loadGraphic(Paths.image('menus/base/creds/' + credshit[i]));
-                sprite.screenCenter(Y);
+                // sprite.screenCenter(Y);
                 credGrp.add(sprite);
             }
 
-            arrowRight = new FlxSprite(1140, 200);
+		    arrowRight = new FlxSprite(textCred.x + textCred.width + 80, 0);
             arrowRight.loadGraphic(Paths.image('menus/base/arrow_indicator'));
             arrowRight.scrollFactor.set();
+		    arrowRight.y = textCred.y - (arrowRight.height / 2);
             arrowRight.antialiasing = true;
-            arrowRight.scale.set(0.7, 0.7);
+            arrowRight.scale.set(0.5, 0.5);
             add(arrowRight);
 
-            arrowLeft = new FlxSprite(20, 200);
+		    arrowLeft = new FlxSprite(textCred.x - textCred.width - 80, arrowRight.y);
             arrowLeft.loadGraphic(Paths.image('menus/base/arrow_indicator'));
             arrowLeft.scrollFactor.set();
             arrowLeft.flipX = true;
             arrowLeft.antialiasing = true;
-            arrowLeft.scale.set(0.7, 0.7);
+            arrowLeft.scale.set(0.5, 0.5);
             add(arrowLeft);
 
             FlxG.camera.follow(camFollow, null, 0.04);
@@ -110,7 +127,10 @@ class CreditsState extends MusicBeatState
     override function update(ELAPSED:Float)
         {
             super.update(ELAPSED);
-
+		   
+            arrowLeft.x = textCred.x - textCred.width - 80;
+		    arrowRight.x = textCred.x + textCred.width + 80;
+            
             if (controls.LEFT_P)
                 selection(-1);
             if (controls.RIGHT_P)

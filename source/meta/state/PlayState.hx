@@ -1190,7 +1190,7 @@ dadStrums.visible = false;
 					if (coolNote.noteType == 2)
 					{
 						extraHealth += 0.025;
-						uiHUD.rings++;
+						rings++;
 					}
 					else
 					healthCall(Timings.judgementsMap.get(foundRating)[3]);
@@ -1203,7 +1203,7 @@ dadStrums.visible = false;
 						Timings.updateAccuracy(100, true, coolNote.parentNote.childrenNotes.length);
 						if (coolNote.noteType == 2){
 						extraHealth += 0.025;
-                        uiHUD.rings++;
+                        rings++;
 						}
 						else
 						healthCall(100 / coolNote.parentNote.childrenNotes.length);
@@ -1564,8 +1564,8 @@ dadStrums.visible = false;
 			displayRating("miss", 'late');
 			if (health <= 0)
 			{
-				extraHealth += 0.055;
-				uiHUD.rings--;
+				extraHealth -= 0.055;
+				rings--;
 			}
 			else
 			healthCall(Timings.judgementsMap.get("miss")[3], shitNote);
@@ -2120,21 +2120,20 @@ dadStrums.visible = false;
 			}
 			camHUD.alpha = 0;
 			var shit = Std.int(startCircle.width * 0.25);
-			startCircle.setGraphicSize(shit);
+			// startCircle.setGraphicSize(shit);
 			add(startCircle);
 
 
 			var startText = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/' + SONG.song.toUpperCase() + "Txt"));
 			startText.cameras = [extraHUD];
 			startText.screenCenter();
-			startText.setGraphicSize(shit);
-			startText.x = 700;
+			// startText.setGraphicSize(shit);
 			add(startText);
 
 			var assText = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/act1'));
 			assText.cameras = [extraHUD];
 			assText.screenCenter();
-			assText.setGraphicSize(shit);
+			// assText.setGraphicSize(shit);
 
 			if (SONG.song.toLowerCase() == "hill")
 				assText.visible = true;
