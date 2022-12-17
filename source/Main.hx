@@ -25,6 +25,7 @@ import openfl.events.UncaughtErrorEvent;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
+import video.*;
 
 // Here we actually import the states and metadata, and just the metadata.
 // It's nice to have modularity so that we don't have ALL elements loaded at the same time.
@@ -77,6 +78,12 @@ class Main extends Sprite
 			['sonic_exe', "bffurry"],
 			[FlxColor.fromRGB(37, 45, 1, 210)],
 			'FURRY LOVE'
+		],
+		[
+			['pelonchas-chart-uno', "pelonchas-chart-dos", "pelonchas-chart-tres"],
+			['bf-pixel'],
+			[FlxColor.fromRGB(37, 45, 1, 210)],
+			'pelonchitass'
 		]
 	];
 
@@ -131,7 +138,28 @@ class Main extends Sprite
 		// here we set up the base game
 		var gameCreate:FlxGame;
 		gameCreate = new FlxGame(gameWidth, gameHeight, mainClassState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash);
-		addChild(gameCreate); // and create it afterwards
+		addChild(gameCreate);
+
+		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
+		
+		#if web
+		var str1:String = "HTML CRAP";
+		var vHandler = new VideoHandler();
+		vHandler.init1();
+		vHandler.video.name = str1;
+		addChild(vHandler.video);
+		vHandler.init2();
+		GlobalVideo.setVid(vHandler);
+		vHandler.source(ourSource);
+		#elseif desktop
+		var str1:String = "WEBM SHIT";
+		var webmHandle = new WebmHandler();
+		webmHandle.source(ourSource);
+		webmHandle.makePlayer();
+		webmHandle.webm.name = str1;
+		addChild(webmHandle.webm);
+		GlobalVideo.setWebm(webmHandle);
+		#end
 
 		// default game FPS settings, I'll probably comment over them later.
 		// addChild(new FPS(10, 3, 0xFFFFFF));

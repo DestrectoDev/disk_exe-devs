@@ -12,10 +12,13 @@ class HealthIcon extends FlxSprite
 {
 	// rewrite using da new icon system as ninjamuffin would say it
 	public var sprTracker:FlxSprite;
-	public var initialWidth:Float = 0;
-	public var initialHeight:Float = 0;
+	public var initialWidth:Float = 1;
+	public var initialHeight:Float = 1;
 
 	public var iconColor:FlxColor = 0xFFFF000;
+
+	public var widthBump:Int = 19;
+	public var heighBump:Int = 19;
 
 	var curCharacter:String = "bf";
 
@@ -24,6 +27,15 @@ class HealthIcon extends FlxSprite
 		super();
 		curCharacter = char;
 		updateIcon(char, isPlayer);
+
+		switch (char){
+			case "bffurry":
+				initialWidth = 0.5;
+				initialHeight = 0.5;
+			default:
+				initialWidth = 1;
+				initialHeight = 1;
+		}
 	}
 
     function updateBarColor(char:String){

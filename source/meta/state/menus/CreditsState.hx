@@ -21,7 +21,8 @@ class CreditsState extends MusicBeatState
 		'programers',
 		"artist's & animators",
 		"artist's & animators - 2",
-		"artist's & animators - PAPUS PRO"
+		"artist's & animators - PAPUS PRO",
+		"posho"
         // 'composers'
         ];
     var credGrp:FlxTypedGroup<FlxSprite>;
@@ -35,7 +36,8 @@ class CreditsState extends MusicBeatState
 	    '0xFF8F0099',
 	    '0xFF21c45d',
 	    '0xFF21c45d',
-	    '0xFF21c45d'
+	    '0xFF21c45d',
+		'0xFF89f5fb'
     ];
     /**
         for Later Shit
@@ -72,7 +74,7 @@ class CreditsState extends MusicBeatState
 		backGround.antialiasing = true;
 		add(backGround);
 
-        textCred = new FlxText(350, 620, '', 74);
+        textCred = new FlxText(450, 620, '', 74);
         textCred.setFormat(Paths.font('Sonic Advanced 2.ttf'), 74);
         textCred.updateHitbox();
         textCred.scrollFactor.set();
@@ -103,7 +105,7 @@ class CreditsState extends MusicBeatState
             arrowRight.scrollFactor.set();
 		    arrowRight.y = textCred.y - (arrowRight.height / 2);
             arrowRight.antialiasing = true;
-            arrowRight.scale.set(0.5, 0.5);
+            arrowRight.scale.set(0.5, 0.2);
             add(arrowRight);
 
 		    arrowLeft = new FlxSprite(textCred.x - textCred.width - 80, arrowRight.y);
@@ -111,7 +113,7 @@ class CreditsState extends MusicBeatState
             arrowLeft.scrollFactor.set();
             arrowLeft.flipX = true;
             arrowLeft.antialiasing = true;
-            arrowLeft.scale.set(0.5, 0.5);
+            arrowLeft.scale.set(0.5, 0.2);
             add(arrowLeft);
 
             FlxG.camera.follow(camFollow, null, 0.04);
@@ -128,8 +130,8 @@ class CreditsState extends MusicBeatState
         {
             super.update(ELAPSED);
 		   
-            arrowLeft.x = textCred.x - textCred.width - 80;
-		    arrowRight.x = textCred.x + textCred.width + 80;
+            arrowLeft.x = textCred.x - textCred.width - 50;
+		    arrowRight.x = textCred.x + textCred.width + 50;
             
             if (controls.LEFT_P)
                 selection(-1);
@@ -163,9 +165,6 @@ class CreditsState extends MusicBeatState
 
                 textCred.text = credshit[curCred];
 
-                switch (curCred)
-		{
-		 default:
             var newColor:Int = someShit[curCred].menuColor;
             if (newColor != intendedColor)
 				{
@@ -174,22 +173,21 @@ class CreditsState extends MusicBeatState
 						colorTween.cancel();
 					}
 					intendedColor = newColor;
-			colorTween = FlxTween.color(backGround, 1, backGround.color, someShit[curCred].menuColor, {
-				onComplete: function(twn:FlxTween) {
-					colorTween = null;
-				}
-			});
-        }
-		}
+                    colorTween = FlxTween.color(backGround, 1, backGround.color, someShit[curCred].menuColor, {
+                        onComplete: function(twn:FlxTween) {
+                            colorTween = null;
+			        	}
+			        });
+		        }
 
                 credGrp.forEach(function(spr:FlxSprite)
-                    {
-if (spr.ID == curCred)
-    {
-        camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
+                {
+                    if (spr.ID == curCred)
+                        {
+                            camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
 
-    }
-                    });
+                        }
+                });
             }
 }
 

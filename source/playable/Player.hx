@@ -85,7 +85,7 @@ class Player extends FNFSprite
 		{
 			if (left || right)
 			{
-				if (holdSpeed >= 222 || holdSpeed <= 222)
+				if (holdSpeed >= 222)
 				playAnim("running");
 				else
 				playAnim("walk", false, false, holdSpeed + 15);
@@ -115,7 +115,7 @@ class Player extends FNFSprite
 			else if (left)
 			{
 				velocity.x = -(SPEED - (holdSpeed));
-				holdSpeed -= 8;
+				holdSpeed += 8;
 				facing = FlxObject.LEFT;
 			}
 			else if (leftR || rightR)

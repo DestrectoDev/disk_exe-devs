@@ -29,6 +29,7 @@ import meta.data.dependency.Discord;
 import meta.data.font.Alphabet;
 import meta.state.menus.*;
 import openfl.Assets;
+import video.*;
 
 using StringTools;
 
@@ -63,6 +64,8 @@ class TitleState extends MusicBeatState
 		SelectState.firstStart = true;
 
 		startIntro();
+
+		// Main.switchState(this, new VideoState('assets/videos/yoursourcevideo.webm', Main.switchState(this, new SelectState()), -1, false);
 	}
 
 	var logoBl:FlxSprite;
@@ -93,6 +96,7 @@ class TitleState extends MusicBeatState
 		addSegaAnimation();
 
 		t = new FlxText(0, 0, FlxG.width, "AUTOPLAY DISABLED", 32);
+		t.visible = false;
 		add(t);
 		textGroup = new FlxGroup();
 
@@ -254,7 +258,7 @@ class TitleState extends MusicBeatState
 			});
 		}
 
-
+/*
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
 			// titleText.animation.play('press');
@@ -280,18 +284,13 @@ class TitleState extends MusicBeatState
 						trace(NGio.GAME_VER_NUMS.trim());
 					}
 					else
-					{ */
+					{ 
 				Main.switchState(this, new SelectState());
 				// }
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
-
-		// hi game, please stop crashing its kinda annoyin, thanks!
-		if (pressedEnter && !skippedIntro && initialized)
-		{
-			skipIntro();
-		}
+	*/
 
 		super.update(elapsed);
 	}

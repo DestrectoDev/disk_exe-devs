@@ -371,7 +371,7 @@ dadStrums.visible = false;
 		uiHUD.iconP1.alpha = 1;
 		uiHUD.ringIcon.alpha = 1;
 		uiHUD.iconP2.alpha = 1;
-		uiHUD.healthBar.alpha = 0.8;
+		uiHUD.healthBar.alpha = 0.85;
 		uiHUD.healthBarBG.alpha = 0.8;
 		uiHUD.extraBar.alpha = 0.8;
 		uiHUD.extraBarBG.alpha = 0.8;
@@ -712,6 +712,16 @@ dadStrums.visible = false;
 			}
 		}
 
+		if ((!Init.trueSettings.get('Reduced Movements')))
+		{
+			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
+			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
+			for (hud in strumHUD){
+				hud.zoom = FlxMath.lerp(1, hud.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
+			}
+		}
+
+
 		if (!inCutscene)
 		{
 			// pause the game if the game is allowed to pause and enter is pressed
@@ -819,7 +829,7 @@ dadStrums.visible = false;
 				}
 			
 				if (SONG.song == "Hills"){
-                   vocals.volume = 2;  
+                   vocals.volume = 42;  
 				}
 
 				if (!PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
@@ -857,6 +867,8 @@ dadStrums.visible = false;
 
 					camFollow.setPosition(getCenterX + camDisplaceX - char.characterData.camOffsetX,
 						getCenterY + camDisplaceY + char.characterData.camOffsetY);
+
+					// FlxG.camera.angle += 2 + (camDisplaceX / 2);
 				}
 			}
 
@@ -1224,6 +1236,9 @@ dadStrums.visible = false;
 			var stringDirection:String = UIStaticArrow.getArrowFromNumber(direction);
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
+			if (health <= 0)
+			character.playAnim('loss', lockMiss);
+			else
 			character.playAnim('sing' + stringDirection.toUpperCase() + 'miss', lockMiss);
 		}
 		decreaseCombo(popMiss);
@@ -1776,13 +1791,46 @@ dadStrums.visible = false;
 	{
 		super.beatHit();
 
-		if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0) && (!Init.trueSettings.get('Reduced Movements')))
-		{
-			FlxG.camera.zoom += 0.015;
-			camHUD.zoom += 0.05;
-			for (hud in strumHUD)
-				hud.zoom += 0.05;
+		if (curBeat % 12 == 0){
+			for (i in 0...boyfriendStrums.length){
+                FlxTween.tween(boyfriendStrums.receptors.members[i], {angle: 350}, Conductor.stepCrochet * 0.002, {onComplete: function(twn){
+					FlxTween.tween(boyfriendStrums.receptors.members[i], {angle: 350}, Conductor.stepCrochet * 0.002, {onComplete: function(twn){
+					boyfriendStrums.receptors.members[i].angle = 0;
+					}, ease: FlxEase.circInOut});
+				}, ease: FlxEase.circInOut});
+			}
 		}
+
+		if (SONG.song.toLowerCase() == "melancholyc-tentation")
+		{
+			if ((FlxG.camera.zoom < 1.35 && curBeat % 1 == 0) && (!Init.trueSettings.get('Reduced Movements')))
+			{
+				FlxG.camera.zoom += 0.1;
+				camHUD.zoom += 0.09;
+				for (hud in strumHUD)
+					hud.zoom += 0.09;
+			}
+		}else{
+			if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0) && (!Init.trueSettings.get('Reduced Movements')))
+			{
+				FlxG.camera.zoom += 0.015;
+				camHUD.zoom += 0.05;
+				
+				for (hud in strumHUD)
+					hud.zoom += 0.03;
+				// if (!camZooming)
+				// { // Just a way for preventing it to be permanently zoomed until Skid & Pump hits a note
+				// 	FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 0.5);
+				// 	FlxTween.tween(camHUD, {zoom: 1}, 0.5);
+				// }
+			}
+		}
+
+		// if (curStep >= 638 && curStep <= 769)
+		//     transMiddleScroll();
+
+		// if (curStep >= 769)
+		// 	transMiddleScroll();
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
@@ -2109,6 +2157,7 @@ dadStrums.visible = false;
 
 			var startCircle = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/circleplaceholder'));
 			startCircle.cameras = [extraHUD];
+			startCircle.scale.set(0.3, 0.3);
 			startCircle.screenCenter();
 			var song_ = SONG.song.toLowerCase();
 
@@ -2127,11 +2176,13 @@ dadStrums.visible = false;
 			var startText = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/' + SONG.song.toUpperCase() + "Txt"));
 			startText.cameras = [extraHUD];
 			startText.screenCenter();
+			startText.scale.set(0.3, 0.3);
 			// startText.setGraphicSize(shit);
 			add(startText);
 
 			var assText = new FlxSprite(0, 0).loadGraphic(Paths.image('startScreen/act1'));
 			assText.cameras = [extraHUD];
+			assText.scale.set(0.3, 0.3);
 			assText.screenCenter();
 			// assText.setGraphicSize(shit);
 
@@ -2148,8 +2199,8 @@ dadStrums.visible = false;
 			new FlxTimer().start(0.6, function(tmr:FlxTimer)
 			{
 				FlxTween.tween(startCircle, {x: 0}, 0.2);
-				FlxTween.tween(startText, {x: 0}, 0.5);
-				FlxTween.tween(assText, {x: 0}, 0.5);
+				FlxTween.tween(startText, {x: 5000}, 0.5);
+				FlxTween.tween(assText, {x: 5000}, 0.5);
 			});
 
 			new FlxTimer().start(1.9, function(tmr:FlxTimer)
@@ -2288,6 +2339,25 @@ dadStrums.visible = false;
 			swagCounter += 1;
 			// generateSong('fresh');
 		}, 5);
+	}
+
+	public function transMiddleScroll(){
+		var middle = true;
+		middle = !middle;
+ 
+	if (!Init.trueSettings.get('Centered Notefield')){
+		if (middle){
+          for (i in 0...boyfriendStrums.length){
+      	  boyfriendStrums.receptors.members[i].x = (FlxG.width / 4);
+		  }
+		 FlxG.camera.flash(FlxColor.RED, 0.04);
+		}else{
+		 FlxG.camera.flash(FlxColor.RED, 0.04);
+		 for (i in 0...boyfriendStrums.length){
+      	  boyfriendStrums.receptors.members[i].x = 0;
+		 }
+		}
+	 }
 	}
 
 	override function add(Object:FlxBasic):FlxBasic

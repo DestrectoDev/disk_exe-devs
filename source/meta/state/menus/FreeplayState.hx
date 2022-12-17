@@ -58,6 +58,8 @@ class FreeplayState extends MusicBeatState
 	private var mainColor = FlxColor.WHITE;
 	private var bg:FlxSprite;
 	private var scoreBG:FlxSprite;
+	
+	var icon:HealthIcon;
 
 	private var existingSongs:Array<String> = [];
 	private var existingDifficulties:Array<Array<String>> = [];
@@ -129,7 +131,7 @@ class FreeplayState extends MusicBeatState
 			songText.targetY = i;
 			grpSongs.add(songText);
 
-			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
+			icon = new HealthIcon(songs[i].songCharacter);
 			icon.sprTracker = songText;
 
 			// using a FlxGroup is too much fuss!
@@ -210,6 +212,7 @@ class FreeplayState extends MusicBeatState
 		
 		app.title = "FNF: The Disks Origin's - CHOSING [" + songs[curSelected].songName.toUpperCase() + "] -";
 
+		icon.scale.set(FlxMath.lerp(0.65, icon.scale.x, (1 - Main.framerateAdjust(0.15))), FlxMath.lerp(0.65, icon.scale.y, (1 - Main.framerateAdjust(0.15))));
 
 		var lerpVal = Main.framerateAdjust(0.1);
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, lerpVal));
@@ -406,6 +409,13 @@ class FreeplayState extends MusicBeatState
 		}
 
 		songThread.sendMessage(curSelected);
+	}
+
+	override public function beatHit() {
+		super.beatHit();
+
+		icon.setGraphicSize(Std.int(icon.width + 19));
+
 	}
 
 	var playingSongs:Array<FlxSound> = [];

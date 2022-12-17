@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="BFsonic.png">
+<TextureAtlas imagePath="bf.png">
 	<!-- Created with Adobe Animate version 22.0.2.168 -->
 	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="Yeah0000" x="0" y="0" width="397" height="486"/>
@@ -74,21 +74,35 @@
 	<SubTexture name="rightM0004" x="2155" y="1454" width="416" height="466"/>
 	<SubTexture name="rightM0005" x="2571" y="1454" width="416" height="466"/>
 	<SubTexture name="rightM0006" x="2571" y="1454" width="416" height="466"/>
-	<SubTexture name="up0000" x="2987" y="1454" width="396" height="513"/>
-	<SubTexture name="up0001" x="2987" y="1454" width="396" height="513"/>
-	<SubTexture name="up0002" x="3383" y="1454" width="396" height="513"/>
-	<SubTexture name="up0003" x="3383" y="1454" width="396" height="513"/>
-	<SubTexture name="up0004" x="3383" y="1454" width="396" height="513"/>
-	<SubTexture name="up0005" x="0" y="1967" width="396" height="513"/>
-	<SubTexture name="up0006" x="0" y="1967" width="396" height="513"/>
-	<SubTexture name="up0007" x="396" y="1967" width="396" height="513"/>
-	<SubTexture name="up0008" x="396" y="1967" width="396" height="513"/>
-	<SubTexture name="up0009" x="792" y="1967" width="396" height="513"/>
-	<SubTexture name="upM0000" x="1188" y="1967" width="362" height="526"/>
-	<SubTexture name="upM0001" x="1550" y="1967" width="362" height="526"/>
-	<SubTexture name="upM0002" x="1550" y="1967" width="362" height="526"/>
-	<SubTexture name="upM0003" x="1912" y="1967" width="362" height="526"/>
-	<SubTexture name="upM0004" x="1912" y="1967" width="362" height="526"/>
-	<SubTexture name="upM0005" x="2274" y="1967" width="362" height="526"/>
-	<SubTexture name="upM0006" x="2274" y="1967" width="362" height="526"/>
+	<SubTexture name="rings0000" x="2987" y="1454" width="563" height="491"/>
+	<SubTexture name="rings0001" x="0" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0002" x="563" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0003" x="1126" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0004" x="1689" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0005" x="2252" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0006" x="2815" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0007" x="2252" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0008" x="3378" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0009" x="3378" y="1945" width="563" height="491"/>
+	<SubTexture name="rings0010" x="0" y="2436" width="563" height="491"/>
+	<SubTexture name="rings0011" x="0" y="2436" width="563" height="491"/>
+	<SubTexture name="rings0012" x="563" y="2436" width="563" height="491"/>
+	<SubTexture name="rings0013" x="563" y="2436" width="563" height="491"/>
+	<SubTexture name="up0000" x="1126" y="2436" width="396" height="513"/>
+	<SubTexture name="up0001" x="1126" y="2436" width="396" height="513"/>
+	<SubTexture name="up0002" x="1522" y="2436" width="396" height="513"/>
+	<SubTexture name="up0003" x="1522" y="2436" width="396" height="513"/>
+	<SubTexture name="up0004" x="1522" y="2436" width="396" height="513"/>
+	<SubTexture name="up0005" x="1918" y="2436" width="396" height="513"/>
+	<SubTexture name="up0006" x="1918" y="2436" width="396" height="513"/>
+	<SubTexture name="up0007" x="2314" y="2436" width="396" height="513"/>
+	<SubTexture name="up0008" x="2314" y="2436" width="396" height="513"/>
+	<SubTexture name="up0009" x="2710" y="2436" width="396" height="513"/>
+	<SubTexture name="upM0000" x="3106" y="2436" width="362" height="526"/>
+	<SubTexture name="upM0001" x="3468" y="2436" width="362" height="526"/>
+	<SubTexture name="upM0002" x="3468" y="2436" width="362" height="526"/>
+	<SubTexture name="upM0003" x="0" y="2962" width="362" height="526"/>
+	<SubTexture name="upM0004" x="0" y="2962" width="362" height="526"/>
+	<SubTexture name="upM0005" x="362" y="2962" width="362" height="526"/>
+	<SubTexture name="upM0006" x="362" y="2962" width="362" height="526"/>
 </TextureAtlas>

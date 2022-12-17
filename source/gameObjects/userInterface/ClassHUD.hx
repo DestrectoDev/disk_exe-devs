@@ -122,7 +122,7 @@ class ClassHUD extends FlxSpriteGroup
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 
-		scoreBar = new FlxText(FlxG.width / 2, Math.floor((Init.trueSettings.get('Downscroll') ? healthBarBG.y + 60 : healthBarBG.y - 40)), 0, scoreDisplay);
+		scoreBar = new FlxText(FlxG.width / 2, Math.floor((Init.trueSettings.get('Downscroll') ? healthBarBG.y + 80 : healthBarBG.y - 40)), 0, scoreDisplay);
 		scoreBar.setFormat(Paths.font('vcr.ttf'), 18, FlxColor.WHITE);
 		scoreBar.setBorderStyle(OUTLINE, FlxColor.BLACK, 1.5);
 		updateScoreText();
@@ -218,7 +218,7 @@ class ClassHUD extends FlxSpriteGroup
 		// iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.initialWidth, iconP2.width, iconLerp)));
 
 		// the new way of scaling the icons lmao
-		iconP1.scale.set(FlxMath.lerp(0.85, iconP1.scale.x, iconLerp), FlxMath.lerp(0.8, iconP1.scale.y, iconLerp));
+		iconP1.scale.set(FlxMath.lerp(0.65, iconP1.scale.x, iconLerp), FlxMath.lerp(0.65, iconP1.scale.y, iconLerp));
 		iconP2.scale.set(FlxMath.lerp(0.85, iconP2.scale.x, iconLerp), FlxMath.lerp(0.8, iconP2.scale.y, iconLerp));
 		
 		ringIcon.scale.set(FlxMath.lerp(0.75, ringIcon.scale.x, iconLerp), FlxMath.lerp(0.75, ringIcon.scale.y, iconLerp));
@@ -230,8 +230,8 @@ class ClassHUD extends FlxSpriteGroup
 
 		var iconOffset:Int = 26;
 
-		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
-		ringIcon.x = extraBar.x + (extraBar.width * (FlxMath.remapToRange(extraBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
+		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset) + 15;
+		ringIcon.x = extraBar.x + (extraBar.width * (FlxMath.remapToRange(extraBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset) - 15;
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
 		iconP1.updateAnim(healthBar.percent);

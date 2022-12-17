@@ -48,6 +48,9 @@
 	<assets path="assets/music" preload="true" />
 	<assets path="FE-CrashDialog.exe" type="template" if="windows release" />
 
+	<assets path="assets/videos" include="*.mp3" if="web"/>
+	<assets path="assets/videos" include="*.ogg" unless="web"/>
+	
 	<!--<assets path="mods" />-->
 
 	<!-- _______________________________ Libraries ______________________________ -->
@@ -58,6 +61,9 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 	<haxelib name="discord_rpc" if="DISCORD_RPC" />
+
+	<haxelib name="actuate" />
+	<haxelib name="extension-webm" if="desktop" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

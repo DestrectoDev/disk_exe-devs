@@ -288,9 +288,10 @@ class Alphabet extends FlxSpriteGroup
 			}
 		}, 0);
 	}
-
+    
 	override function update(elapsed:Float)
 	{
+		
 		if (isMenuItem)
 		{
 			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
@@ -368,6 +369,17 @@ class AlphaCharacter extends FlxSprite
 
 		y = (110 - height);
 		y += row * 50;
+	}
+
+	var colorSine:Float;
+	override public function update(elapsed:Float){
+		super.update(elapsed);
+
+		
+		colorSine += elapsed;
+		var colorVal:Float = 0.7 + Math.sin(Math.PI * colorSine) * 0.3;
+		color = flixel.util.FlxColor.fromRGBFloat(colorVal + 202, colorVal + 20, colorVal + 60, 0.999);
+		
 	}
 
 	public function createNumber(letter:String):Void

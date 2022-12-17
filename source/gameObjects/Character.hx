@@ -463,7 +463,7 @@ class Character extends FNFSprite
 
 				playAnim('idle');
 			case 'sonic_exe':
-				iconColor = 0xFF252dbb;
+				iconColor = 0xFF2b00b7;
 				tex = Paths.getSparrowAtlas('characters/sonic/Sonic_exe');
 				frames = tex;
 				animation.addByPrefix('idle', 'idle', 24, false);
@@ -492,7 +492,7 @@ class Character extends FNFSprite
 
 				playAnim('idle');
 			case 'bffurry':
-				iconColor = 0xFF549ad5;
+				iconColor = 0xFF00abd6;
 				tex = Paths.getSparrowAtlas('characters/bf/BFsonic');
 				frames = tex;
 				animation.addByPrefix('idle', 'idle', 24, false);
@@ -505,6 +505,8 @@ class Character extends FNFSprite
 				animation.addByPrefix('singRIGHTmiss', 'rightM', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'downM', 24, false);
 				animation.addByPrefix('singLEFTmiss', 'leftM', 24, false);
+
+				animation.addByPrefix('loss', 'rings', 24, false);
 				
 				animation.addByPrefix('hey', 'Yeah', 24);
 
@@ -566,16 +568,16 @@ class Character extends FNFSprite
 					return setCharacter(x, y, 'bf');
 		}
 
-		// set up offsets cus why not
-		if (OpenFlAssets.exists(Paths.offsetTxt(curCharacter + 'Offsets')))
-		{
-			var characterOffsets:Array<String> = CoolUtil.coolTextFile(Paths.offsetTxt(curCharacter + 'Offsets'));
-			for (i in 0...characterOffsets.length)
-			{
-				var getterArray:Array<Array<String>> = CoolUtil.getOffsetsFromTxt(Paths.offsetTxt(curCharacter + 'Offsets'));
-				addOffset(getterArray[i][0], Std.parseInt(getterArray[i][1]), Std.parseInt(getterArray[i][2]));
-			}
-		}
+		// // set up offsets cus why not
+		// if (OpenFlAssets.exists(Paths.offsetTxt(curCharacter + 'Offsets')))
+		// {
+		// 	var characterOffsets:Array<String> = CoolUtil.coolTextFile(Paths.offsetTxt(curCharacter + 'Offsets'));
+		// 	for (i in 0...characterOffsets.length)
+		// 	{
+		// 		var getterArray:Array<Array<String>> = CoolUtil.getOffsetsFromTxt(Paths.offsetTxt(curCharacter + 'Offsets'));
+		// 		addOffset(getterArray[i][0], Std.parseInt(getterArray[i][1]), Std.parseInt(getterArray[i][2]));
+		// 	}
+		// }
 
 		dance();
 
