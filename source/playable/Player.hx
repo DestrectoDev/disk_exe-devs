@@ -108,13 +108,13 @@ class Player extends FNFSprite
 			}
 			if (right)
 			{
-				velocity.x = (SPEED + (holdSpeed));
+				velocity.x = (SPEED + (holdSpeed * 2));
 				holdSpeed += 8;
 				facing = FlxObject.RIGHT;
 			}
 			else if (left)
 			{
-				velocity.x = -(SPEED - (holdSpeed));
+				velocity.x = -(SPEED - (Std.int(holdSpeed / 2)));
 				holdSpeed += 8;
 				facing = FlxObject.LEFT;
 			}
@@ -203,12 +203,6 @@ class Player extends FNFSprite
 		moveTails(eventvalue, elapsed);
 		jumpTails(true);	
 
-		if (holdSpeed >= 225){
-			holdSpeed = 225;
-		}
-		if (holdSpeed <= 225){
-			holdSpeed = -225;
-		}
 	}
 
 	// public function addOffset(name:String, x:Float = 0, y:Float = 0)

@@ -62,10 +62,8 @@ class TitleState extends MusicBeatState
 		super.create();
  
 		SelectState.firstStart = true;
-
 		startIntro();
-
-		// Main.switchState(this, new VideoState('assets/videos/yoursourcevideo.webm', Main.switchState(this, new SelectState()), -1, false);
+		// Main.switchState(this, new VideoState('assets/videos/title/title.webm', new SelectState(), false));
 	}
 
 	var logoBl:FlxSprite;
@@ -222,7 +220,6 @@ class TitleState extends MusicBeatState
 		if (FlxG.keys.justPressed.SIX)
 			FlxG.save.data.autoGame = !FlxG.save.data.autoGame;
 		
-		t.text = "AUTO PLAY " + Std.string(FlxG.save.data.autoGame);
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);

@@ -242,7 +242,10 @@ class Paths
 	{
 		return getPath('$key.txt', TEXT, library);
 	}
-
+	static public function video(key:String)
+	{
+		return 'assets/cutscenes/$key.mp4';
+	}
 	inline static public function xml(key:String, ?library:String)
 	{
 		return getPath('data/$key.xml', TEXT, library);

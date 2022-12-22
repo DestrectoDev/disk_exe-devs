@@ -233,6 +233,29 @@ class Note extends FNFSprite
 				
 		}
 		// actually determine the quant of the note
+		switch (isRingNote)
+		{
+			case true:
+				newNote.frames = Paths.getSparrowAtlas("UI/default/base/ringNoteSpr");
+				newNote.animation.addByPrefix('greenScroll', 'rings note');
+				newNote.animation.addByPrefix('redScroll', 'rings note');
+				newNote.animation.addByPrefix('blueScroll', 'rings note');
+				newNote.animation.addByPrefix('purpleScroll', 'rings note');
+
+				newNote.animation.addByPrefix('purpleholdend', 'pruple end hold');
+				newNote.animation.addByPrefix('greenholdend', 'green hold end');
+				newNote.animation.addByPrefix('redholdend', 'red hold end');
+				newNote.animation.addByPrefix('blueholdend', 'blue hold end');
+
+				newNote.animation.addByPrefix('purplehold', 'purple hold piece');
+				newNote.animation.addByPrefix('greenhold', 'green hold piece');
+				newNote.animation.addByPrefix('redhold', 'red hold piece');
+				newNote.animation.addByPrefix('bluehold', 'blue hold piece');
+
+				newNote.setGraphicSize(Std.int(newNote.width * 0.6));
+				newNote.updateHitbox();
+				newNote.antialiasing = true;
+		default:
 		if (newNote.noteQuant == -1)
 		{
 			/*
@@ -343,7 +366,7 @@ class Note extends FNFSprite
 				// prevNote.setGraphicSize();
 			}
 		}
-
+	}
 		return newNote;
 	}
 }

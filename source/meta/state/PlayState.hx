@@ -1801,14 +1801,21 @@ dadStrums.visible = false;
 			}
 		}
 
+		if (SONG.song.toLowerCase() == "hill"){
+			decreaseHUD();
+
+		if (curStep == 50)
+			spawnHUD();
+		}
+
 		if (SONG.song.toLowerCase() == "melancholyc-tentation")
 		{
 			if ((FlxG.camera.zoom < 1.35 && curBeat % 1 == 0) && (!Init.trueSettings.get('Reduced Movements')))
 			{
-				FlxG.camera.zoom += 0.1;
-				camHUD.zoom += 0.09;
+				FlxG.camera.zoom += 0.025;
+				camHUD.zoom += 0.07;
 				for (hud in strumHUD)
-					hud.zoom += 0.09;
+					hud.zoom += 0.07;
 			}
 		}else{
 			if ((FlxG.camera.zoom < 1.35 && curBeat % 4 == 0) && (!Init.trueSettings.get('Reduced Movements')))
@@ -1958,6 +1965,9 @@ dadStrums.visible = false;
 		canPause = false;
 		songMusic.volume = 0;
 		vocals.volume = 0;
+		
+		songMusic.stop();
+		vocals.stop();
 
 		app.title = "FNF: The Disks Origin's";
 
@@ -2029,6 +2039,21 @@ dadStrums.visible = false;
 			default:
 				callDefaultSongEnd();
 		}
+	}
+
+	public function decreaseHUD(){
+		for (i in 0...strumLines.length)
+		{
+		  strumHUD[i].alpha = 0;
+		}
+		camHUD.alpha = 0;
+	}
+	public function spawnHUD(){
+		for (i in 0...strumLines.length)
+		{
+			FlxTween.tween(strumHUD[i], {alpha: 1}, 1);
+		}
+		FlxTween.tween(camHUD, {alpha: 1}, 1);
 	}
 
 	private function callDefaultSongEnd()

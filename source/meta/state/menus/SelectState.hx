@@ -241,19 +241,19 @@ class SelectState extends MusicBeatState{
 
 
   if (canSelect)  {
-    if (controls.UP_P)
+    if (controls.UI_UP_P)
         changeMode(true);
-    if (controls.DOWN_P)
+    if (controls.UI_DOWN_P)
         changeMode(false);
 
-     if (controls.LEFT_P) {
+     if (controls.UI_LEFT_P) {
     if (curChangeMode)
         changeFunction(-1);
     else
         changeAlt(-1);
      }
 
-    if (controls.RIGHT_P) {
+    if (controls.UI_RIGHT_P) {
     if (curChangeMode)
         changeFunction(1);
     else

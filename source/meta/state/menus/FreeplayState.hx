@@ -60,7 +60,7 @@ class FreeplayState extends MusicBeatState
 	private var scoreBG:FlxSprite;
 	
 	var icon:HealthIcon;
-
+	var songText:Alphabet;	
 	private var existingSongs:Array<String> = [];
 	private var existingDifficulties:Array<Array<String>> = [];
 	var app = Application.current.window;
@@ -126,13 +126,14 @@ class FreeplayState extends MusicBeatState
 
 		for (i in 0...songs.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i].songName, true, false);
+			songText = new Alphabet(0, (70 * i) + 30, songs[i].songName, true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
+			// songText.controllable = true;
+			
 			grpSongs.add(songText);
 
 			icon = new HealthIcon(songs[i].songCharacter);
-			icon.sprTracker = songText;
 
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);
@@ -204,12 +205,17 @@ class FreeplayState extends MusicBeatState
 				num[1]++;
 		}
 	}
-
+	var colorSine:Float = 0;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
 		
+		icon.sprTracker = songText;
+	
+		colorSine += elapsed;
+		var colorVal:Float = 0.7 + Math.sin(Math.PI * colorSine) * 0.3;
+		songText.color = flixel.util.FlxColor.fromRGBFloat(colorVal, colorVal, colorVal, 0.999);
+
 		app.title = "FNF: The Disks Origin's - CHOSING [" + songs[curSelected].songName.toUpperCase() + "] -";
 
 		icon.scale.set(FlxMath.lerp(0.65, icon.scale.x, (1 - Main.framerateAdjust(0.15))), FlxMath.lerp(0.65, icon.scale.y, (1 - Main.framerateAdjust(0.15))));
