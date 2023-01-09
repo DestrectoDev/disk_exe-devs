@@ -356,19 +356,53 @@ class Stage extends FlxTypedGroup<FlxBasic>
 				redShade.scale.set(1.3, 1.3);
 				redShade.scrollFactor.set(0.4, 0.4);
 				redShade.color = 0xFFFF7D7D;
+		   case "normal-hill":
+				PlayState.defaultCamZoom = 0.63;
+				curStage = "normal-hill";
+				
+				var sky = new FNFSprite(-702.1, -879.35);
+				sky.loadGraphic(Paths.image("stages/green_hill/normal/fondo"));
+				sky.scrollFactor.set(1.2, 1.2);
+				sky.antialiasing = true;
+				add(sky);
+
+				var lake = new FNFSprite(-636, -491);
+				lake.frames = Paths.getSparrowAtlas("stages/green_hill/normal/animacion de agua");
+				lake.animation.addByPrefix("loop", "Símbolo 1 instancia", 24);
+				lake.playAnim("loop");
+				lake.scrollFactor.set(1.3, 1.3);
+				lake.antialiasing = true;
+				add(lake);
+				
+				var floor = new FNFSprite(-636, -411);
+				floor.loadGraphic(Paths.image("stages/green_hill/normal/pis2 0"));
+				floor.scrollFactor.set(0.97, 0.95);
+				floor.antialiasing = true;
+
+				var mont = new FNFSprite(-636, -411);
+				mont.loadGraphic(Paths.image("stages/green_hill/normal/montañas"));
+				mont.scrollFactor.set(0.97, 0.95);
+				mont.antialiasing = true;
+				add(mont);
+				add(floor);
+
+				var palms = new FNFSprite(-636, -761);
+				palms.loadGraphic(Paths.image("stages/normal/green_hill/vegetacion"));
+				palms.scrollFactor.set(0.97, 0.95);
+				palms.antialiasing = true;
+				add(palms);
 			case "skeld":
 				PlayState.defaultCamZoom = 0.75;
                 curStage = "skeld";
 				
-				var skeld = new FNFSprite(-198.3, -24.6).loadGraphic(Paths.image("stages/" + curStage +"/stageAll"));
+				var skeld = new FNFSprite(-298.3, -114.6).loadGraphic(Paths.image("stages/" + curStage +"/stageAll"));
 				skeld.scrollFactor.set(0.54, 0.54);
 				skeld.setGraphicSize(Std.int(skeld.width * 2));
 				add(skeld);
 
-				shade = new FNFSprite(-198.3, -94.6).loadGraphic(Paths.image("stages/" + curStage + "/shade"));
+				shade = new FNFSprite(-298.3, -114.6).loadGraphic(Paths.image("stages/" + curStage + "/shade"));
 				shade.scrollFactor.set(0.54, 0.54);
-				shade.setGraphicSize(Std.int(skeld.width * 1.5));
-				
+				shade.setGraphicSize(Std.int(skeld.width * 2));
 			default:
 				PlayState.defaultCamZoom = 0.9;
 				curStage = 'stage';

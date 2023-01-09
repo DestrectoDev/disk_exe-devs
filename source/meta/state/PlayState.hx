@@ -1801,12 +1801,12 @@ dadStrums.visible = false;
 			}
 		}
 
-		if (SONG.song.toLowerCase() == "hill"){
-			decreaseHUD();
+		// if (SONG.song.toLowerCase() == "hill"){
+		// 	decreaseHUD();
 
-		if (curStep == 50)
-			spawnHUD();
-		}
+		// if (curStep == 50)
+		// 	spawnHUD();
+		// }
 
 		if (SONG.song.toLowerCase() == "melancholyc-tentation")
 		{
