@@ -79,12 +79,6 @@ class Main extends Sprite
 			[FlxColor.fromRGB(37, 45, 1, 210)],
 			'FURRY LOVE'
 		],
-		[
-			['pelonchas-chart-uno', "pelonchas-chart-dos", "pelonchas-chart-tres"],
-			['bf-pixel'],
-			[FlxColor.fromRGB(37, 45, 1, 210)],
-			'pelonchitass'
-		]
 	];
 
 	// most of these variables are just from the base game!

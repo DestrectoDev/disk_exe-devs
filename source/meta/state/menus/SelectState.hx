@@ -272,6 +272,8 @@ if (!stopSpam){
 
     if (FlxG.keys.justPressed.FIVE)
         Main.switchState(this, new Hills());
+    if (FlxG.keys.justPressed.SIX)
+        Main.switchState(this, new Dumbass());
 
      if (controls.BACK) {
         Main.switchState(this, new TitleState());
